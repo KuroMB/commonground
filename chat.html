@@ -577,7 +577,13 @@
   }
   #__cg-print__ { display: none; }
 </style>
-<script defer data-domain="commonground-mu.vercel.app" src="https://plausible.io/js/script.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
 
@@ -681,8 +687,8 @@ let messages = [];
 let exchanges = 0;
 let currentBrief = null;
 
-function track(event, props) {
-  if (typeof window.plausible === 'function') window.plausible(event, { props });
+function track(event, params) {
+  if (typeof window.gtag === 'function') window.gtag('event', event, params || {});
 }
 
 function selectMode(m) {
@@ -699,7 +705,7 @@ function selectMode(m) {
   addMessage('bot', cfg.opening);
   messages.push({ role: 'assistant', content: cfg.opening });
   document.getElementById('chat-input').focus();
-  track('Chat Mode Selected', { mode: m });
+  track('chat_mode_selected', { mode: m });
 }
 
 function resetMode() {
@@ -766,7 +772,7 @@ async function sendMessage() {
   addMessage('user', text);
   messages.push({ role: 'user', content: text });
   exchanges++;
-  track('Chat Message Sent', { mode });
+  track('chat_message_sent', { mode });
 
   showTyping();
 
@@ -855,7 +861,7 @@ async function generateBrief() {
     currentBrief = brief;
     renderBrief(brief);
     document.getElementById('overlay').classList.add('open');
-    track('Brief Generated', { mode });
+    track('brief_generated', { mode });
 
   } catch {
     hideTyping();
@@ -902,7 +908,7 @@ function overlayClick(e) {
 
 function downloadBrief() {
   if (!currentBrief) return;
-  track('Brief Downloaded', { mode });
+  track('brief_downloaded', { mode });
   const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const printEl = document.getElementById('__cg-print__');
 
@@ -969,7 +975,7 @@ async function submitLeadCapture(e) {
     document.getElementById('lead-capture').innerHTML =
       '<p class="lc-success">Got it — we\'ll be in touch within 48 hours.</p>';
     sessionStorage.setItem('cg-lead-submitted', '1');
-    track('Lead Capture Submitted', { mode });
+    track('lead_capture_submitted', { mode });
   } catch {
     btn.disabled = false;
     btn.textContent = 'Request a follow-up →';

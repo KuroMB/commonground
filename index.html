@@ -1398,7 +1398,13 @@
     .hero-left h1 { font-size: 2.2rem; }
   }
 </style>
-<script defer data-domain="commonground-mu.vercel.app" src="https://plausible.io/js/script.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
 
@@ -1950,13 +1956,13 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  function track(event, props) {
-    if (typeof window.plausible === 'function') window.plausible(event, { props });
+  function track(event, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', event, params || {});
   }
 
   // Fire once when the user first touches the contact form
   document.getElementById('inquiry-form').addEventListener('focusin', function onFormFocus() {
-    track('Contact Form Started');
+    track('contact_form_started');
     this.removeEventListener('focusin', onFormFocus);
   });
 
@@ -1969,7 +1975,7 @@
 
     const form = e.target;
     const data = Object.fromEntries(new FormData(form));
-    track('Contact Form Submitted');
+    track('contact_form_submitted');
 
     try {
       const res = await fetch('https://formspree.io/f/xykvaogr', {
@@ -1980,17 +1986,17 @@
       if (res.ok) {
         document.getElementById('form-content').style.display = 'none';
         document.getElementById('form-success').classList.add('show');
-        track('Contact Form Success');
+        track('contact_form_success');
       } else {
         btn.disabled = false;
         btn.textContent = 'Request My Discovery Call →';
-        track('Contact Form Error');
+        track('contact_form_error');
         alert('Something went wrong. Please try again or email us directly.');
       }
     } catch {
       btn.disabled = false;
       btn.textContent = 'Request My Discovery Call →';
-      track('Contact Form Error');
+      track('contact_form_error');
       alert('Something went wrong. Please try again or email us directly.');
     }
   }

@@ -248,7 +248,13 @@
     .hero-stats { gap: 1rem; }
   }
 </style>
-<script defer data-domain="commonground-mu.vercel.app" src="https://plausible.io/js/script.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 </head>
 <body>
 
@@ -656,8 +662,8 @@
 </footer>
 
 <script>
-  function track(event, props) {
-    if (typeof window.plausible === 'function') window.plausible(event, { props });
+  function track(event, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', event, params || {});
   }
 
   // Track grant link clicks — capture the grant name from the card heading
@@ -665,14 +671,14 @@
     link.addEventListener('click', function() {
       const card = this.closest('.grant-card');
       const name = card ? (card.querySelector('.grant-name')?.textContent || 'Unknown') : 'Unknown';
-      track('Grant Link Clicked', { grant: name });
+      track('grant_link_clicked', { grant_name: name });
     });
   });
 
   // Track category nav clicks
   document.querySelectorAll('.cat-nav a').forEach(function(link) {
     link.addEventListener('click', function() {
-      track('Grants Category Clicked', { category: this.textContent.trim() });
+      track('grants_category_clicked', { category: this.textContent.trim() });
     });
   });
 </script>
