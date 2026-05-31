@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Money in St. Louis — Community Space Grants Guide | CommonGround Advisory</title>
+<meta name="description" content="A plain-English guide to grants available for nonprofits and community organizations in St. Louis looking to activate vacant spaces, build maker spaces, and create community gathering places.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --cream: #f5f0e8;
+    --warm: #e8dcc8;
+    --rust: #b85c38;
+    --sage: #5a7a5e;
+    --gold: #c9a84c;
+    --light-sage: #e8f0e9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(26,26,24,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--rust); }
+
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+
+  nav ul a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  nav ul a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--rust);
+    color: var(--cream) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    opacity: 1 !important;
+  }
+
+  .nav-cta:hover { background: var(--ink) !important; }
+
+  /* HERO */
+  .page-hero {
+    padding: 9rem 6rem 5rem;
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '$';
+    font-family: 'Playfair Display', serif;
+    font-size: 32rem;
+    position: absolute;
+    right: -2rem;
+    top: -6rem;
+    opacity: 0.04;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.08;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .page-hero h1 em { font-style: italic; color: var(--gold); }
+
+  .page-hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    opacity: 0.75;
+    max-width: 640px;
+    margin-bottom: 1.5rem;
+  }
+
+  .catch-line {
+    font-size: 0.9rem;
+    color: var(--gold);
+    font-style: italic;
+    opacity: 0.9;
+  }
+
+  /* INTRO */
+  .intro {
+    padding: 5rem 6rem;
+    background: var(--warm);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .intro p {
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .intro-tip {
+    background: var(--cream);
+    border: 1px solid rgba(26,26,24,0.1);
+    border-radius: 4px;
+    padding: 2rem;
+    position: sticky;
+    top: 100px;
+  }
+
+  .intro-tip-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .intro-tip p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    opacity: 0.75;
+    margin-bottom: 0.75rem;
+  }
+
+  .intro-tip-cta {
+    display: inline-block;
+    margin-top: 0.75rem;
+    background: var(--rust);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s;
+    width: 100%;
+    text-align: center;
+  }
+
+  .intro-tip-cta:hover { background: var(--ink); }
+
+  /* GRANT SECTIONS */
+  .grants-section {
+    padding: 5rem 6rem;
+  }
+
+  .grants-section:nth-child(even) { background: var(--cream); }
+  .grants-section:nth-child(odd) { background: var(--warm); }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 0.75rem;
+  }
+
+  .grants-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .grants-section h2 em { font-style: italic; color: var(--rust); }
+
+  .section-intro {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    opacity: 0.7;
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+
+  .grants-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .grant-card {
+    background: var(--cream);
+    border: 1px solid rgba(26,26,24,0.1);
+    border-radius: 4px;
+    padding: 2rem;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+
+  .grants-section:nth-child(odd) .grant-card { background: white; }
+  .grants-section:nth-child(even) .grant-card { background: var(--warm); }
+
+  .grant-card:hover { box-shadow: 0 8px 32px rgba(26,26,24,0.1); }
+
+  .grant-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .grant-card.city::before { background: var(--rust); }
+  .grant-card.county::before { background: var(--sage); }
+  .grant-card.state::before { background: var(--gold); }
+  .grant-card.foundation::before { background: #8b6bb1; }
+  .grant-card.federal::before { background: #3a7abf; }
+
+  .grant-type-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .grant-card.city .grant-type-tag { color: var(--rust); }
+  .grant-card.county .grant-type-tag { color: var(--sage); }
+  .grant-card.state .grant-type-tag { color: #a07a20; }
+  .grant-card.foundation .grant-type-tag { color: #8b6bb1; }
+  .grant-card.federal .grant-type-tag { color: #3a7abf; }
+
+  .grant-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .grant-amount {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--rust);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.75rem;
+  }
+
+  .grant-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    opacity: 0.75;
+    margin-bottom: 1rem;
+  }
+
+  .grant-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(26,26,24,0.08);
+  }
+
+  .grant-meta-row {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .grant-meta-label {
+    font-weight: 500;
+    opacity: 0.5;
+    min-width: 80px;
+  }
+
+  .grant-meta-value {
+    opacity: 0.8;
+  }
+
+  .grant-status {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .grant-status.recurring { background: #e8f0e9; color: var(--sage); }
+  .grant-status.open { background: #e8f5e9; color: #2e7d32; }
+  .grant-status.closed { background: rgba(26,26,24,0.06); color: rgba(26,26,24,0.4); }
+  .grant-status.check { background: #fff8e1; color: #a07a20; }
+
+  .grant-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: var(--rust);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(184,92,56,0.3);
+    transition: border-color 0.2s;
+  }
+
+  .grant-link:hover { border-color: var(--rust); }
+
+  /* TIPS SECTION */
+  .tips-section {
+    padding: 5rem 6rem;
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .tips-section .section-label { color: var(--gold); }
+
+  .tips-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+  }
+
+  .tips-section h2 em { color: var(--gold); }
+
+  .tips-section .section-intro { color: rgba(245,240,232,0.7); }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .tip-card {
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(245,240,232,0.1);
+    border-radius: 4px;
+    padding: 2rem;
+  }
+
+  .tip-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: -0.25rem;
+  }
+
+  .tip-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.6rem;
+  }
+
+  .tip-desc {
+    font-size: 0.83rem;
+    line-height: 1.65;
+    opacity: 0.65;
+  }
+
+  /* CTA */
+  .page-cta {
+    padding: 5rem 6rem;
+    background: var(--rust);
+    color: var(--cream);
+    text-align: center;
+  }
+
+  .page-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+
+  .page-cta h2 em { color: var(--gold); }
+
+  .page-cta p {
+    font-size: 1rem;
+    opacity: 0.85;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+
+  .btn-primary {
+    background: var(--cream);
+    color: var(--rust);
+    padding: 0.85rem 2rem;
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--gold); color: var(--ink); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3rem 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--rust); }
+
+  footer p { font-size: 0.78rem; opacity: 0.4; }
+
+  .footer-links { display: flex; gap: 2rem; }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+
+  .footer-links a:hover { opacity: 0.9; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .page-hero { padding: 7rem 1.5rem 4rem; }
+    .intro { padding: 4rem 1.5rem; grid-template-columns: 1fr; gap: 2rem; }
+    .intro-tip { position: static; }
+    .grants-section { padding: 4rem 1.5rem; }
+    .grants-grid { grid-template-columns: 1fr; }
+    .tips-section { padding: 4rem 1.5rem; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .page-cta { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="commonground.html" class="nav-logo">Common<span>Ground</span> Advisory</a>
+  <ul>
+    <li><a href="commonground.html#nonprofits">For Nonprofits</a></li>
+    <li><a href="commonground.html#services">Services</a></li>
+    <li><a href="commonground.html#about">About</a></li>
+    <li><a href="commonground.html#contact" class="nav-cta">Start a Conversation</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="eyebrow">CommonGround Advisory · Resource Guide</div>
+  <h1>Free Money<br>in <em>St. Louis</em>.</h1>
+  <p class="page-hero-sub">A plain-English guide to grants available for nonprofits and community organizations looking to activate vacant spaces, build maker spaces, and create family gathering places in the St. Louis region.</p>
+  <p class="catch-line">Free — with a catch. You gotta do a little work to make this city a better place.</p>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <div>
+    <p>Most nonprofits and community organizations doing good work in St. Louis don't know how much grant money is sitting there waiting for them. It's not hidden — it's just buried in government websites, foundation portals, and program names that don't make obvious what they're for.</p>
+    <p>This page is our attempt to fix that. We've compiled the most relevant funding sources for organizations looking to activate vacant spaces, build community gathering places, and create programming for families and youth in the St. Louis area.</p>
+    <p>We update this page as new funding cycles open. If you know of a source we've missed, tell us.</p>
+    <p style="font-style:italic; opacity:0.6; font-size:0.88rem;">Note: Grant deadlines change annually. Always verify current deadlines and eligibility directly with the funding source before applying. This page was last updated May 2026.</p>
+  </div>
+  <div class="intro-tip">
+    <div class="intro-tip-title">Don't know where to start?</div>
+    <p>CommonGround offers free consultations for nonprofits and community orgs in St. Louis. We'll help you identify which grants fit your project, how to frame your application, and what a realistic activation plan looks like.</p>
+    <p>No fee. No pitch. Just a conversation.</p>
+    <a href="commonground.html#nonprofits" class="intro-tip-cta">Get Free Help →</a>
+  </div>
+</div>
+
+<!-- CITY OF ST. LOUIS -->
+<section class="grants-section">
+  <div class="section-label">City of St. Louis</div>
+  <h2>City funding for <em>community activation</em>.</h2>
+  <p class="section-intro">The City of St. Louis Community Development Administration (CDA) runs the most accessible grant programs for nonprofit space activation. These are federally-funded through HUD's CDBG and HOME programs, administered locally. The key is knowing which program fits your project.</p>
+  <div class="grants-grid">
+
+    <div class="grant-card city">
+      <div class="grant-type-tag">City of St. Louis · CDA</div>
+      <div class="grant-name">Neighborhood Beautification & Green Community Spaces</div>
+      <div class="grant-amount">$50,000–$100,000</div>
+      <p class="grant-desc">The most directly relevant grant for community space activation. Supports vacant lot beautification, green infrastructure, public space activation, recreation projects, and community art. Open to 501(c)(3) nonprofits and neighborhood organizations. Funding period runs through December 2026.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">501(c)(3) nonprofits, neighborhood associations</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Cycle</span><span class="grant-meta-value">Annual — watch for spring opening</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status recurring">Recurring</span></div>
+      </div>
+      <a href="https://www.stlouis-mo.gov/CDA/neighborhood-nofa/index.cfm" target="_blank" class="grant-link">View CDA Grant Programs →</a>
+    </div>
+
+    <div class="grant-card city">
+      <div class="grant-type-tag">City of St. Louis · CDA</div>
+      <div class="grant-name">Neighborhood Plan Implementation</div>
+      <div class="grant-amount">Up to $1,500,000</div>
+      <p class="grant-desc">Large-scale funding for activating projects tied to adopted City of St. Louis neighborhood plans. If your project aligns with a neighborhood plan adopted since 2019, this is a significant funding source. Requires coordination with the relevant neighborhood plan.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofits, CDCs, neighborhood associations</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Cycle</span><span class="grant-meta-value">Annual</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status recurring">Recurring</span></div>
+      </div>
+      <a href="https://www.stlouis-mo.gov/CDA/neighborhood-nofa/index.cfm" target="_blank" class="grant-link">View CDA Grant Programs →</a>
+    </div>
+
+    <div class="grant-card city">
+      <div class="grant-type-tag">City of St. Louis · CDA</div>
+      <div class="grant-name">CDBG Non-Housing Program Grants</div>
+      <div class="grant-amount">Varies</div>
+      <p class="grant-desc">The broader Community Development Block Grant program funds public services, infrastructure, and community development activities. Nonprofit-owned nonresidential buildings and improvements are eligible. The 2026 cycle distributed over $17 million total across programs.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofits, government entities</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Cycle</span><span class="grant-meta-value">Annual — applications typically open August</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status recurring">Recurring</span></div>
+      </div>
+      <a href="https://www.stlouis-mo.gov/CDA/cdbg/2026.cfm" target="_blank" class="grant-link">View 2026 CDBG Cycle →</a>
+    </div>
+
+    <div class="grant-card city">
+      <div class="grant-type-tag">City of St. Louis · CDA</div>
+      <div class="grant-name">HOME-ARP Supportive Services</div>
+      <div class="grant-amount">Up to $1,500,000</div>
+      <p class="grant-desc">Funding for nonprofit organizations serving vulnerable populations — people experiencing homelessness, at-risk of homelessness, fleeing domestic violence. If your space project includes a supportive services component, this is worth exploring.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofits serving vulnerable populations</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">2026 Deadline</span><span class="grant-meta-value">June 5, 2026</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status open">Open</span></div>
+      </div>
+      <a href="https://www.stlouis-mo.gov/government/departments/community-development/index.cfm" target="_blank" class="grant-link">View CDA Programs →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ARTS & CULTURE -->
+<section class="grants-section">
+  <div class="section-label">Arts, Culture & Community Programming</div>
+  <h2>Funding for <em>programs and people</em>.</h2>
+  <p class="section-intro">These sources fund the programming layer of community spaces — the events, workshops, arts activities, and cultural programming that turn a building into a destination. If your space activation includes an arts or community programming component, these are your best options.</p>
+  <div class="grants-grid">
+
+    <div class="grant-card foundation">
+      <div class="grant-type-tag">Regional Arts Commission</div>
+      <div class="grant-name">RAC Organizational Grants</div>
+      <div class="grant-amount">Varies · Annual unrestricted</div>
+      <p class="grant-desc">The largest public funder of arts in St. Louis. Organizational grants provide unrestricted annual funding to mission-driven nonprofit arts and culture organizations in St. Louis City and County. Over $115 million granted since 1985. Program Support Grants are also available for non-arts organizations running arts programming.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofit arts orgs (city + county); non-arts orgs for Program Support</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Cycle</span><span class="grant-meta-value">Annual</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status check">Check racstl.org</span></div>
+      </div>
+      <a href="https://racstl.org/grants/" target="_blank" class="grant-link">View RAC Grants →</a>
+    </div>
+
+    <div class="grant-card foundation">
+      <div class="grant-type-tag">St. Louis Community Foundation</div>
+      <div class="grant-name">Spirit of St. Louis Women's Fund</div>
+      <div class="grant-amount">Varies · Small nonprofits</div>
+      <p class="grant-desc">Over $3.4 million granted to more than 106 small St. Louis nonprofits since 2006. Focuses on women and families. Next LOI opportunity is May 2026. Good fit for smaller community orgs doing direct family and community programming.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Small nonprofits in St. Louis region</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Next LOI</span><span class="grant-meta-value">May 2026</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status check">Upcoming</span></div>
+      </div>
+      <a href="https://stlgives.org/nonprofits/grants-management/" target="_blank" class="grant-link">View STLCF Grants →</a>
+    </div>
+
+    <div class="grant-card foundation">
+      <div class="grant-type-tag">St. Louis Community Foundation</div>
+      <div class="grant-name">Gateway Regional Environment Fund</div>
+      <div class="grant-amount">Varies</div>
+      <p class="grant-desc">Supports projects in the St. Louis metro area that reduce the region's carbon footprint and promote community environmental efforts. If your space activation has a sustainability, green space, or urban ecology angle, this is worth exploring.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofits in St. Louis metro area</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Cycle</span><span class="grant-meta-value">Annual</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status check">Check stlgives.org</span></div>
+      </div>
+      <a href="https://stlgives.org/nonprofits/grants-management/" target="_blank" class="grant-link">View STLCF Grants →</a>
+    </div>
+
+    <div class="grant-card foundation">
+      <div class="grant-type-tag">Walmart Community</div>
+      <div class="grant-name">Spark Good Local Grants</div>
+      <div class="grant-amount">$250–$5,000</div>
+      <p class="grant-desc">Small-scale community grants from local Walmart and Sam's Club stores. Low barrier, accessible, good for pilot programs and smaller-scale community projects. Awarded through local store managers — relationships matter here.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">501(c)(3) nonprofits near Walmart locations</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Cycle</span><span class="grant-meta-value">Rolling / annual</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status recurring">Recurring</span></div>
+      </div>
+      <a href="https://walmart.org/how-we-give/local-community-grants" target="_blank" class="grant-link">View Spark Good Grants →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEDERAL -->
+<section class="grants-section">
+  <div class="section-label">Federal & State Programs</div>
+  <h2>Bigger money,<br><em>more paperwork</em>.</h2>
+  <p class="section-intro">Federal and state programs require more effort but offer larger awards and longer funding periods. These are worth understanding even if you're not ready to apply yet — knowing they exist shapes how you design and frame your project from the start.</p>
+  <div class="grants-grid">
+
+    <div class="grant-card federal">
+      <div class="grant-type-tag">Federal · HUD</div>
+      <div class="grant-name">Community Development Block Grant (CDBG)</div>
+      <div class="grant-amount">Varies by jurisdiction</div>
+      <p class="grant-desc">The backbone of community development funding nationally. St. Louis City and County both administer CDBG funds separately. Eligible uses include community facilities, public services, and neighborhood improvements. If your project serves low-to-moderate income communities, CDBG is likely your largest available source.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofits, government entities, CDCs</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Access via</span><span class="grant-meta-value">City CDA or St. Louis County Human Services</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status recurring">Annual</span></div>
+      </div>
+      <a href="https://stlouiscountymo.gov/st-louis-county-departments/human-services/community-development/community-development-block-grants/" target="_blank" class="grant-link">St. Louis County CDBG →</a>
+    </div>
+
+    <div class="grant-card state">
+      <div class="grant-type-tag">Missouri · Tax Incentive</div>
+      <div class="grant-name">Tax Increment Financing (TIF)</div>
+      <div class="grant-amount">Project-specific</div>
+      <p class="grant-desc">TIF isn't a grant — it's a financing mechanism that redirects future property tax increases from a redevelopment area to fund the redevelopment itself. Relevant for larger projects involving property acquisition and significant buildout. Worth understanding if you're working with a developer or municipality on a larger space conversion.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Best for</span><span class="grant-meta-value">Larger projects with development partners</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Access via</span><span class="grant-meta-value">City/County TIF commission</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status check">Project-specific</span></div>
+      </div>
+    </div>
+
+    <div class="grant-card state">
+      <div class="grant-type-tag">Missouri State Parks</div>
+      <div class="grant-name">Recreational Trails Program</div>
+      <div class="grant-amount">Varies · 80% federal match</div>
+      <p class="grant-desc">Available to local governments, school districts, nonprofits, and businesses. Covers constructing new recreational trails, maintaining existing trails, and developing trailheads. If your space activation includes outdoor or trail components, this covers up to 80% of project costs.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofits, local governments, schools</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Match required</span><span class="grant-meta-value">20% minimum</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status recurring">Annual</span></div>
+      </div>
+      <a href="https://mostateparks.com/page/grant-opportunities" target="_blank" class="grant-link">View Missouri State Parks Grants →</a>
+    </div>
+
+    <div class="grant-card federal">
+      <div class="grant-type-tag">Federal · EPA</div>
+      <div class="grant-name">Brownfields Assessment & Cleanup Grants</div>
+      <div class="grant-amount">Up to $500,000</div>
+      <p class="grant-desc">If the vacant space you're working with has potential environmental contamination from prior use (former gas station, dry cleaner, industrial building), EPA Brownfields grants fund assessment and cleanup. This unlocks spaces that would otherwise be too risky or costly to redevelop.</p>
+      <div class="grant-meta">
+        <div class="grant-meta-row"><span class="grant-meta-label">Eligible</span><span class="grant-meta-value">Nonprofits, governments, community orgs</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Cycle</span><span class="grant-meta-value">Annual</span></div>
+        <div class="grant-meta-row"><span class="grant-meta-label">Status</span><span class="grant-status recurring">Annual</span></div>
+      </div>
+      <a href="https://www.epa.gov/brownfields/brownfields-grant-resources" target="_blank" class="grant-link">View EPA Brownfields Grants →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section">
+  <div class="section-label">How to Actually Get This Money</div>
+  <h2>Grant writing tips from<br><em>someone who's read the applications</em>.</h2>
+  <p class="section-intro">Most grant applications fail not because the project is bad, but because the framing is wrong. Here's what we've learned about how to position community space projects for funding success.</p>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-number">01</div>
+      <div class="tip-title">Frame it as community infrastructure, not a building project</div>
+      <p class="tip-desc">Grant reviewers fund outcomes, not construction. "We're renovating a vacant storefront" loses. "We're creating a free after-school maker space serving 150 youth in a food-insecure census tract" wins. Lead with people and outcomes, not square footage.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">02</div>
+      <div class="tip-title">Know your census tract status before you apply</div>
+      <p class="tip-desc">Most City and CDBG grants prioritize projects in Qualified Census Tracts (QCTs) and Economic Justice Index priority areas. Check the CDA maps before you write a single word. If your project is in a priority area, say so in your first paragraph.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">03</div>
+      <div class="tip-title">Stack your funding sources — don't rely on one</div>
+      <p class="tip-desc">A $50K CDA grant plus a $5K Walmart Spark Good grant plus a RAC Program Support grant plus in-kind donations is a $75K+ project. Grant reviewers like seeing diverse funding — it signals community buy-in and reduces their risk.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">04</div>
+      <div class="tip-title">Start smaller than you think you need to</div>
+      <p class="tip-desc">A $15K pilot that proves demand is worth more than a $200K plan that hasn't happened yet. The Lighter, Quicker, Cheaper approach — temporary programming, pop-up events, community workshops before permanent buildout — gives you real data for your next grant application.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">05</div>
+      <div class="tip-title">Community engagement is evidence, not a checkbox</div>
+      <p class="tip-desc">Documentation of community support — survey results, letters from neighborhood associations, attendance at public meetings — dramatically strengthens applications. Start collecting it early, before you need it for a grant deadline.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-number">06</div>
+      <div class="tip-title">Read last year's awards list</div>
+      <p class="tip-desc">Most government grant programs publish their award lists. Finding organizations that received funding for similar projects tells you exactly how to frame yours. The CDA publishes its Neighborhood Transformation Grant awards annually on its website.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="page-cta">
+  <h2>Found something that<br>fits your project? <em>Let's talk.</em></h2>
+  <p>CommonGround offers free consultations for nonprofits and community organizations in the St. Louis area. We'll help you figure out which grants match your project, how to frame your application, and what a realistic first step looks like.</p>
+  <a href="commonground.html#contact" class="btn-primary">Request Free Consultation →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="commonground.html" class="footer-logo">Common<span>Ground</span> Advisory</a>
+  <p>© 2026 CommonGround Advisory · St. Louis, MO · This page is provided as a free community resource. Verify all grant details directly with funders.</p>
+  <div class="footer-links">
+    <a href="commonground.html#services">Services</a>
+    <a href="commonground.html#nonprofits">Nonprofits</a>
+    <a href="commonground.html#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

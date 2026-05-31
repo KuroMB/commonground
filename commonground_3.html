@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Ground Advisory — Family Third Space Consultants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --cream: #f5f0e8;
+    --warm: #e8dcc8;
+    --rust: #b85c38;
+    --sage: #5a7a5e;
+    --gold: #c9a84c;
+    --light-sage: #e8f0e9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(26,26,24,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--rust); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul a {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  nav ul a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--rust);
+    color: var(--cream) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    opacity: 1 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--ink) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-shape {
+    position: absolute;
+    right: -5%;
+    top: 0;
+    bottom: 0;
+    width: 52%;
+    background: var(--warm);
+    clip-path: polygon(8% 0%, 100% 0%, 100% 100%, 0% 100%);
+    z-index: 0;
+  }
+
+  .hero-left {
+    padding: 4rem 3rem 4rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.08;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink);
+    opacity: 0.75;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--rust);
+    color: var(--cream);
+    padding: 0.85rem 2rem;
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.85rem 2rem;
+    border: 1.5px solid rgba(26,26,24,0.3);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  .hero-right {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 4rem 4rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid rgba(26,26,24,0.1);
+    padding: 1.5rem;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeSlideUp 0.6s ease both;
+  }
+
+  .stat-card:nth-child(1) { animation-delay: 0.1s; transform: translateX(20px); }
+  .stat-card:nth-child(2) { animation-delay: 0.25s; transform: translateX(-10px); margin-left: 2rem; }
+  .stat-card:nth-child(3) { animation-delay: 0.4s; transform: translateX(15px); }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--rust);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--rust);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-label {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    opacity: 0.7;
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 6rem 6rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  h2 em { font-style: italic; color: var(--rust); }
+
+  /* ── PROBLEM SECTION ── */
+  .problem {
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 40rem;
+    position: absolute;
+    top: -12rem;
+    left: -3rem;
+    opacity: 0.04;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .problem .section-label { color: var(--gold); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .problem h2 { color: var(--cream); }
+  .problem h2 em { color: var(--gold); }
+
+  .problem-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.8;
+  }
+
+  .problem-points {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .problem-point {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .point-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+  }
+
+  .point-text { font-size: 0.92rem; line-height: 1.65; opacity: 0.8; }
+  .point-text strong { color: var(--gold); opacity: 1; font-weight: 500; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--cream); }
+
+  .services-intro {
+    max-width: 640px;
+    margin-bottom: 3.5rem;
+  }
+
+  .services-intro p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    opacity: 0.75;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: rgba(26,26,24,0.1);
+    border: 1px solid rgba(26,26,24,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--cream);
+    padding: 2.5rem;
+    transition: background 0.25s;
+    position: relative;
+  }
+
+  .service-card:hover { background: var(--light-sage); }
+
+  .service-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--rust);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: -0.5rem;
+  }
+
+  .service-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    opacity: 0.7;
+  }
+
+  .service-tag {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 500;
+    border-bottom: 1px solid var(--sage);
+    padding-bottom: 1px;
+  }
+
+  .service-price {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--rust);
+    opacity: 0.85;
+  }
+
+  /* ── NONPROFIT OFFER ── */
+  .nonprofits {
+    background: var(--sage);
+    color: var(--cream);
+    padding: 6rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nonprofits::before {
+    content: '';
+    position: absolute;
+    right: -100px;
+    top: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(245,240,232,0.05);
+    pointer-events: none;
+  }
+
+  .nonprofits .section-label { color: rgba(245,240,232,0.6); }
+  .nonprofits h2 { color: var(--cream); }
+  .nonprofits h2 em { color: var(--gold); }
+
+  .nonprofit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .nonprofit-offer {
+    background: rgba(245,240,232,0.08);
+    border: 1px solid rgba(245,240,232,0.2);
+    border-radius: 4px;
+    padding: 2.5rem;
+  }
+
+  .nonprofit-offer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--cream);
+  }
+
+  .nonprofit-offer-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .nonprofit-offer p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    opacity: 0.85;
+    margin-bottom: 1rem;
+  }
+
+  .nonprofit-offer ul {
+    list-style: none;
+    margin: 1.25rem 0 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .nonprofit-offer li {
+    font-size: 0.88rem;
+    padding-left: 1.25rem;
+    position: relative;
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+
+  .nonprofit-offer li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .nonprofit-catch {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    font-style: italic;
+    margin-top: 0.75rem;
+  }
+
+  .nonprofit-btn {
+    background: var(--cream);
+    color: var(--sage);
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .nonprofit-btn:hover { background: var(--gold); color: var(--ink); }
+
+  .nonprofit-context p {
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.85;
+    margin-bottom: 1.25rem;
+  }
+
+  .nonprofit-examples {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nonprofit-example {
+    padding: 1.25rem;
+    background: rgba(245,240,232,0.06);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 3px 3px 0;
+  }
+
+  .nonprofit-example-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.06em;
+  }
+
+  .nonprofit-example p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .nonprofits { padding: 4rem 1.5rem; }
+    .nonprofit-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
+  /* ── AUDIENCE ── */
+  .audience {
+    background: var(--warm);
+    position: relative;
+  }
+
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .audience-card {
+    padding: 2rem 1.75rem;
+    background: var(--cream);
+    border-radius: 4px;
+    border: 1px solid rgba(26,26,24,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .audience-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(26,26,24,0.1);
+  }
+
+  .audience-icon {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .audience-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .audience-desc {
+    font-size: 0.83rem;
+    line-height: 1.65;
+    opacity: 0.65;
+  }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .phil-visual {
+    position: relative;
+    height: 480px;
+  }
+
+  .phil-box {
+    position: absolute;
+    background: var(--warm);
+    border: 1px solid rgba(26,26,24,0.1);
+    border-radius: 4px;
+    padding: 2rem;
+  }
+
+  .phil-box.large {
+    width: 75%;
+    height: 65%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .phil-box.small {
+    width: 55%;
+    height: 45%;
+    bottom: 0;
+    right: 0;
+    background: var(--sage);
+    color: var(--cream);
+  }
+
+  .phil-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .phil-attr {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-top: 0.75rem;
+  }
+
+  .phil-box.small .phil-quote { font-size: 1.1rem; color: var(--cream); }
+  .phil-box.small .phil-attr { color: rgba(245,240,232,0.6); }
+
+  .philosophy p {
+    font-size: 1rem;
+    line-height: 1.8;
+    opacity: 0.75;
+    margin-bottom: 1.25rem;
+  }
+
+  .philosophy ul {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .philosophy li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    padding-left: 1.5rem;
+    position: relative;
+    opacity: 0.8;
+  }
+
+  .philosophy li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-photo {
+    position: sticky;
+    top: 100px;
+  }
+
+  .about-photo-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--warm);
+    border-radius: 4px;
+    border: 1px solid rgba(26,26,24,0.1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-photo-placeholder {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    color: var(--rust);
+    opacity: 0.2;
+  }
+
+  .about-photo-caption {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    letter-spacing: 0.06em;
+  }
+
+  .about-content p {
+    font-size: 1rem;
+    line-height: 1.85;
+    opacity: 0.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .about-title {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .about { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-photo { position: static; }
+    .about-photo-frame { aspect-ratio: 1/1; max-width: 240px; }
+  }
+  .cta-band {
+    background: var(--rust);
+    color: var(--cream);
+    text-align: center;
+    padding: 5rem 6rem;
+  }
+
+  .cta-band h2 {
+    color: var(--cream);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    margin-bottom: 1rem;
+  }
+
+  .cta-band h2 em { color: var(--gold); }
+
+  .cta-band p {
+    font-size: 1.05rem;
+    opacity: 0.85;
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  .cta-band .btn-primary {
+    background: var(--cream);
+    color: var(--rust);
+    font-size: 0.9rem;
+  }
+
+  .cta-band .btn-primary:hover { background: var(--gold); color: var(--ink); }
+
+  /* ── CONTACT FORM ── */
+  .contact {
+    background: var(--warm);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-info h2 { margin-bottom: 1rem; }
+
+  .contact-info p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    opacity: 0.75;
+    margin-bottom: 2rem;
+  }
+
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .contact-detail span {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-detail strong {
+    font-size: 0.85rem;
+    color: var(--rust);
+  }
+
+  .form-card {
+    background: var(--cream);
+    border-radius: 4px;
+    padding: 3rem;
+    border: 1px solid rgba(26,26,24,0.08);
+  }
+
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-sub {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-bottom: 2rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  input, select, textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid rgba(26,26,24,0.15);
+    border-radius: 2px;
+    background: var(--cream);
+    color: var(--ink);
+    transition: border-color 0.2s;
+    width: 100%;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+
+  textarea { min-height: 110px; resize: vertical; }
+
+  .form-submit {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ── INSPIRATION ── */
+  .inspiration {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 6rem 6rem;
+  }
+
+  .inspiration .section-label { color: var(--gold); }
+  .inspiration h2 { color: var(--cream); margin-bottom: 0.75rem; }
+  .inspiration h2 em { color: var(--gold); }
+
+  .inspiration-intro {
+    font-size: 1rem;
+    line-height: 1.75;
+    opacity: 0.7;
+    max-width: 640px;
+    margin-bottom: 3.5rem;
+  }
+
+  /* Photo mosaic grid */
+  .inspiration-mosaic {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 220px;
+    gap: 6px;
+    margin-bottom: 4rem;
+  }
+
+  .inspiration-mosaic .photo-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    cursor: default;
+  }
+
+  .inspiration-mosaic .photo-card.tall { grid-row: span 2; }
+  .inspiration-mosaic .photo-card.wide { grid-column: span 2; }
+
+  .photo-card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+    filter: brightness(0.55);
+  }
+
+  .photo-card:hover .photo-card-bg {
+    transform: scale(1.04);
+    filter: brightness(0.45);
+  }
+
+  .photo-card-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.25rem 1.25rem 1rem;
+    background: linear-gradient(to top, rgba(26,26,24,0.9) 0%, transparent 100%);
+    z-index: 1;
+  }
+
+  .photo-card-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  .photo-card.type-stl .photo-card-tag { color: #e8856a; }
+  .photo-card.type-national .photo-card-tag { color: var(--gold); }
+  .photo-card.type-concept .photo-card-tag { color: #7ab87f; }
+
+  .photo-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.25;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .photo-card-hook {
+    font-size: 0.72rem;
+    color: rgba(245,240,232,0.65);
+    line-height: 1.45;
+    display: none;
+  }
+
+  .photo-card:hover .photo-card-hook { display: block; }
+
+  /* Text cards grid below photos */
+  .inspiration-text-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(245,240,232,0.06);
+    border: 1px solid rgba(245,240,232,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .inspiration-text-card {
+    background: rgba(245,240,232,0.02);
+    padding: 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .inspiration-text-card:hover { background: rgba(245,240,232,0.06); }
+
+  .inspiration-text-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .inspiration-text-card.type-stl::before { background: var(--rust); }
+  .inspiration-text-card.type-national::before { background: var(--gold); }
+  .inspiration-text-card.type-concept::before { background: var(--sage); }
+
+  .inspiration-type {
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .inspiration-text-card.type-stl .inspiration-type { color: #e8856a; }
+  .inspiration-text-card.type-national .inspiration-type { color: var(--gold); }
+  .inspiration-text-card.type-concept .inspiration-type { color: #7ab87f; }
+
+  .inspiration-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+    color: var(--cream);
+  }
+
+  .inspiration-desc {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    opacity: 0.55;
+  }
+
+  .inspiration-hook {
+    font-size: 0.72rem;
+    margin-top: 0.6rem;
+    color: var(--gold);
+    font-style: italic;
+    line-height: 1.45;
+    opacity: 0.85;
+  }
+
+  .inspiration-legend {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    opacity: 0.55;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .inspiration { padding: 4rem 1.5rem; }
+    .inspiration-mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+    .inspiration-mosaic .photo-card.wide { grid-column: span 1; }
+    .inspiration-text-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .inspiration-mosaic { grid-template-columns: 1fr; }
+    .inspiration-text-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3rem 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .footer-logo span { color: var(--rust); }
+
+  footer p {
+    font-size: 0.78rem;
+    opacity: 0.4;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+
+  .footer-links a:hover { opacity: 0.9; }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── SUCCESS STATE ── */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+
+  .form-success.show { display: block; }
+
+  .success-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-success h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-success p { font-size: 0.9rem; opacity: 0.7; line-height: 1.6; }
+
+  /* ── ANNOUNCEMENT BANNER ── */
+  .announcement-banner {
+    background: var(--sage);
+    color: var(--cream);
+    text-align: center;
+    padding: 0.65rem 3rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .announcement-banner strong { color: var(--gold); font-weight: 500; }
+
+  .announcement-banner a {
+    color: var(--cream);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  .announcement-banner a:hover { color: var(--gold); }
+
+  .banner-close {
+    position: absolute;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    color: rgba(245,240,232,0.5);
+    font-size: 1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.25rem;
+    transition: color 0.2s;
+  }
+
+  .banner-close:hover { color: var(--cream); }
+
+  body.banner-visible nav { top: 38px; }
+  body.banner-visible .hero { padding-top: 118px; }
+
+  /* ── CHAT WIDGET ── */
+  .chat-widget {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 500;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .chat-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--rust);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(184,92,56,0.4);
+    transition: transform 0.2s, background 0.2s;
+    color: var(--cream);
+    font-size: 1.4rem;
+  }
+
+  .chat-button:hover { transform: scale(1.08); background: var(--ink); }
+
+  .chat-button .icon-chat { display: block; }
+  .chat-button .icon-close { display: none; }
+  .chat-widget.open .chat-button .icon-chat { display: none; }
+  .chat-widget.open .chat-button .icon-close { display: block; }
+
+  .chat-panel {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    width: 340px;
+    background: var(--cream);
+    border-radius: 8px;
+    box-shadow: 0 12px 48px rgba(26,26,24,0.18);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 520px;
+  }
+
+  .chat-widget.open .chat-panel { display: flex; }
+
+  .chat-header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .chat-header-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4caf50;
+    flex-shrink: 0;
+  }
+
+  .chat-header-text { flex: 1; }
+
+  .chat-header-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .chat-header-sub {
+    font-size: 0.7rem;
+    opacity: 0.5;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 320px;
+  }
+
+  .chat-msg {
+    max-width: 85%;
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.83rem;
+    line-height: 1.55;
+  }
+
+  .chat-msg.bot {
+    background: var(--warm);
+    color: var(--ink);
+    border-bottom-left-radius: 3px;
+    align-self: flex-start;
+  }
+
+  .chat-msg.user {
+    background: var(--rust);
+    color: var(--cream);
+    border-bottom-right-radius: 3px;
+    align-self: flex-end;
+  }
+
+  .chat-msg.thinking {
+    background: var(--warm);
+    align-self: flex-start;
+    opacity: 0.6;
+    font-style: italic;
+    font-size: 0.78rem;
+  }
+
+  .chat-starters {
+    padding: 0 1rem 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chat-starter {
+    background: white;
+    border: 1px solid rgba(26,26,24,0.12);
+    border-radius: 20px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.72rem;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background 0.15s, border-color 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .chat-starter:hover { background: var(--light-sage); border-color: var(--sage); }
+
+  .chat-input-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgba(26,26,24,0.08);
+    background: white;
+  }
+
+  .chat-input {
+    flex: 1;
+    border: 1.5px solid rgba(26,26,24,0.12);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input:focus { border-color: var(--rust); }
+
+  .chat-send {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--rust);
+    border: none;
+    cursor: pointer;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: background 0.2s;
+    align-self: center;
+  }
+
+  .chat-send:hover { background: var(--ink); }
+
+  @media (max-width: 900px) {
+    .announcement-banner { font-size: 0.75rem; padding: 0.6rem 2.5rem; }
+    .chat-panel { width: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BANNER -->
+<div class="announcement-banner" id="announcement-banner">
+  <span>💰 <strong>Free money in St. Louis:</strong> Grants for homeowners, nonprofits, small businesses & more. &nbsp;<a href="grants.html">See the Full Guide →</a></span>
+  <button class="banner-close" onclick="closeBanner()" aria-label="Close">✕</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Common<span>Ground</span> Advisory</a>
+  <ul>
+    <li><a href="#nonprofits">For Nonprofits</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#inspiration">Inspiration</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="grants.html">Free Money →</a></li>
+    <li><a href="#contact" class="nav-cta">Start a Conversation</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-shape"></div>
+
+  <div class="hero-left fade-in visible">
+    <div class="eyebrow">Community Space Consultants · St. Louis, MO</div>
+    <h1>Dead Spaces.<br><em>Living</em><br>Communities.</h1>
+    <p class="hero-sub">We help nonprofits, community organizations, and property owners transform vacant and underused spaces into places where families actually want to gather. Start with a free consultation.</p>
+    <div class="hero-actions">
+      <a href="#nonprofits" class="btn-primary">Free Nonprofit Consultation</a>
+      <a href="#services" class="btn-ghost">Our Approach</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-number">9,000</div>
+      <div class="stat-label">Vacant buildings in the City of St. Louis alone — most already have utilities, parking, and bones worth saving. The infrastructure is there. The vision isn't.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">$500K</div>
+      <div class="stat-label">Available annually from the City of St. Louis CDA for nonprofits activating vacant spaces — grants most organizations don't know exist.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">0</div>
+      <div class="stat-label">Dedicated family third spaces in most American suburbs — no free, welcoming place for parents and children to simply be together outside of home or school.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-label">The Problem</div>
+  <div class="problem-grid">
+    <div>
+      <h2>The space exists.<br><em>The community</em><br>is waiting.</h2>
+      <p class="problem-text" style="margin-top:1.5rem;">St. Louis has roughly 9,000 vacant buildings. Most suburbs have zero dedicated family gathering spaces. Parents are expected to entertain their kids around the clock with nowhere to go that isn't a transaction. Meanwhile, the buildings, the parking lots, the utilities — they're already there. The problem isn't infrastructure. It's vision, process, and knowing where the money is.</p>
+    </div>
+    <div class="problem-points">
+      <div class="problem-point">
+        <div class="point-icon">🏚️</div>
+        <p class="point-text"><strong>Vacant buildings are everywhere</strong> — former retail, churches, schools, factories. Most have utilities and bones worth saving. The infrastructure is already there.</p>
+      </div>
+      <div class="problem-point">
+        <div class="point-icon">👨‍👩‍👧</div>
+        <p class="point-text"><strong>Families have nowhere to go</strong> that isn't a store, a restaurant, or a screen. There's no free, low-pressure place to simply be together. That's not a market gap — it's a community failure.</p>
+      </div>
+      <div class="problem-point">
+        <div class="point-icon">💰</div>
+        <p class="point-text"><strong>Grant funding exists</strong> — from the City of St. Louis CDA, Missouri state programs, and private foundations — that most nonprofits and community orgs never apply for because they don't know how to frame the project.</p>
+      </div>
+      <div class="problem-point">
+        <div class="point-icon">🧠</div>
+        <p class="point-text"><strong>Human behavior, not architecture,</strong> determines whether a space becomes a destination. Most redevelopment plans start with renderings. We start with people.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NONPROFIT OFFER -->
+<section class="nonprofits" id="nonprofits">
+  <div class="section-label">For Nonprofits & Community Organizations</div>
+  <h2 class="fade-in">Free help.<br><em>Real catch.</em></h2>
+  <div class="nonprofit-grid fade-in">
+    <div class="nonprofit-offer">
+      <div class="nonprofit-offer-sub">Limited Availability · St. Louis Area Only</div>
+      <div class="nonprofit-offer-title">Free Consultation for Nonprofit Space Projects</div>
+      <p>If you're a nonprofit or community organization in the St. Louis area with a vacant space to activate — or a vision for one — we'll help you get started. No fee. No pitch.</p>
+      <ul>
+        <li>One free in-person site consultation</li>
+        <li>Five hours of async digital support — questions, feedback, strategy via email or chat</li>
+        <li>Help identifying relevant grant funding for your project</li>
+        <li>A clear, honest assessment of what's realistic and what isn't</li>
+      </ul>
+      <p class="nonprofit-catch">The catch: you have to actually want to make St. Louis better. We're building a portfolio of real work with real community partners. If your project gets off the ground, we'll ask if we can tell the story.</p>
+      <a href="#contact" class="btn-primary nonprofit-btn">Apply for Free Consultation →</a>
+    </div>
+    <div class="nonprofit-context">
+      <p>We started CommonGround because we believe the buildings are there, the community need is there, and the money is often there — what's missing is someone to help connect the dots.</p>
+      <p>A community organization doesn't need a $50,000 consultant. They need someone who's done the research, knows the grant landscape, understands how to test an idea cheaply before committing capital, and will show up in person to walk the space with them.</p>
+      <p>That's what this is.</p>
+      <div class="nonprofit-examples">
+        <div class="nonprofit-example">
+          <div class="nonprofit-example-title">What a project might look like</div>
+          <p>A youth org has a vacant storefront next to their headquarters. They want a maker space and after-school gathering spot. We help them frame it, identify CDA grant funding, design a low-cost pilot, and map the first 90 days.</p>
+        </div>
+        <div class="nonprofit-example">
+          <div class="nonprofit-example-title">Or this</div>
+          <p>A neighborhood association has been staring at a vacant church hall for two years. They have community support but no plan. We help them turn community energy into a fundable project with a realistic activation sequence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Do</div>
+  <div class="services-intro fade-in">
+    <h2>A framework built for<br><em>this specific moment</em>.</h2>
+    <p>We combine placemaking theory, community development knowledge, and behavioral psychology to help clients move from vacant square footage to thriving community destinations. Our engagements are practical, phased, and designed for the real constraints of nonprofit organizations, property owners, and local government.</p>
+  </div>
+  <div class="services-grid fade-in">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <div class="service-title">Space Activation Audit</div>
+      <p class="service-desc">A deep diagnostic of your property's current state, community demographics, competitive landscape, and activation potential. Includes foot traffic analysis, parent and family behavioral assessment, and a prioritized opportunity map.</p>
+      <span class="service-tag">Starting Point</span>
+      <div class="service-price">From $1,500 · Free for qualifying nonprofits</div>
+    </div>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <div class="service-title">Family Destination Strategy</div>
+      <p class="service-desc">A complete vision and implementation roadmap for transforming anchor or inline mall space into a family-centered third place. Tenant mix recommendations, programming calendar, phased activation plan, and revenue modeling.</p>
+      <span class="service-tag">Core Service</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <div class="service-title">Tenant & Operator Sourcing</div>
+      <p class="service-desc">We maintain relationships with family entertainment operators — trampoline parks, inflatable venues, play-based learning concepts, party room operators — and can help match the right tenants to your specific space and market.</p>
+      <span class="service-tag">Network Access</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">04</div>
+      <div class="service-title">Lighter, Quicker, Cheaper Pilots</div>
+      <p class="service-desc">Before committing to a full redevelopment, test the concept. We design low-cost activation experiments — pop-up play spaces, weekend programming, temporary installations — that generate real data and community buy-in.</p>
+      <span class="service-tag">Low Risk</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">05</div>
+      <div class="service-title">Community Engagement & Facilitation</div>
+      <p class="service-desc">Successful third spaces are built with communities, not for them. We facilitate stakeholder sessions, parent focus groups, and co-design workshops that surface genuine unmet needs and build early advocates.</p>
+      <span class="service-tag">Placemaking Core</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">06</div>
+      <div class="service-title">Ongoing Advisory Retainer</div>
+      <p class="service-desc">For properties in active transformation, we serve as a long-term strategic partner — refining programming, tracking activation metrics, advising on new tenants, and helping leadership stay aligned on the family destination vision.</p>
+      <span class="service-tag">Partnership</span>
+      <div class="service-price">From $2,000/month</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE SERVE -->
+<section class="audience" id="who">
+  <div class="section-label">Who We Serve</div>
+  <h2 class="fade-in">The right partners<br>for <em>every stage</em>.</h2>
+  <div class="audience-grid fade-in">
+    <div class="audience-card">
+      <div class="audience-icon">🏢</div>
+      <div class="audience-title">Mall Owners & REITs</div>
+      <p class="audience-desc">Property owners and REITs — including national operators like CBL, Brookfield, and Simon as well as regional and independent owners — managing properties with vacant anchor space or declining foot traffic who need a credible family activation strategy.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">🔨</div>
+      <div class="audience-title">Developers & Investors</div>
+      <p class="audience-desc">Buyers acquiring distressed mall assets who need to understand what a family-first repositioning actually looks like, costs, and generates in revenue.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">🏛️</div>
+      <div class="audience-title">Municipal & Economic Development</div>
+      <p class="audience-desc">County boards, BIDs, and economic development organizations exploring how to convert dying retail into community infrastructure — like South County Center's youth sports conversion.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-icon">🎪</div>
+      <div class="audience-title">FEC Operators & Entrepreneurs</div>
+      <p class="audience-desc">Family entertainment center operators looking for the right mall space, and entrepreneurs building the next generation of family-focused concepts who need market validation and site strategy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="phil-visual fade-in">
+    <div class="phil-box large">
+      <p class="phil-quote">"Third places are where the community comes to life."</p>
+      <p class="phil-attr">— Ray Oldenburg, The Great Good Place (1989)</p>
+    </div>
+    <div class="phil-box small">
+      <p class="phil-quote">"The community are the experts. They know what an area needs better than anyone."</p>
+      <p class="phil-attr">— Project for Public Spaces</p>
+    </div>
+  </div>
+  <div class="fade-in">
+    <div class="section-label">Our Philosophy</div>
+    <h2>People before<br><em>square footage</em>.</h2>
+    <p>We are grounded in the placemaking tradition established by Ray Oldenburg and the Project for Public Spaces — the belief that great places are made through community participation, not top-down design. We layer that with a practical understanding of family entertainment economics and the specific behavioral psychology of parents with young children.</p>
+    <p>We don't sell renderings. We help clients understand human behavior, test ideas cheaply, and build momentum through small wins before committing large capital.</p>
+    <p>CommonGround also has a deliberate bias toward existing spaces. The infrastructure is already built. The parking is already paid for. The community already knows where it is. Starting with what's there — and asking what it could become — is both more sustainable and more honest than proposing something new from scratch.</p>
+    <ul>
+      <li>Rooted in Third Place Theory and the 11 Principles of Placemaking</li>
+      <li>Informed by motivational interviewing and behavioral change frameworks</li>
+      <li>Guided by "Lighter, Quicker, Cheaper" — test before you build</li>
+      <li>Focused on existing spaces and infrastructure whenever possible</li>
+      <li>Focused on the family demographic that every other redevelopment strategy ignores</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INSPIRATION -->
+<section class="inspiration" id="inspiration">
+  <div class="section-label">What's Possible</div>
+  <h2 class="fade-in">The proof is already <em>out there</em>.</h2>
+  <p class="inspiration-intro fade-in">These places exist. People show up for them, stay, and come back. Most started with an underused building and a question: what does this community actually need? Use this as a starting point for imagining what your space could become.</p>
+
+  <!-- PHOTO MOSAIC -->
+  <div class="inspiration-mosaic fade-in">
+
+    <div class="photo-card type-stl tall">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/1739321/pexels-photo-1739321.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">St. Louis · Climbable Museum</span>
+        <span class="photo-card-name">City Museum</span>
+        <span class="photo-card-hook">A repurposed shoe factory turned into a playground of caves, slides, and reclaimed architecture. What happens when you design for wonder.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-stl">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/1250452/pexels-photo-1250452.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">St. Louis · Children's Museum</span>
+        <span class="photo-card-name">The Magic House</span>
+        <span class="photo-card-hook">Families drive 30 minutes for the right experience.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-national">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/17935410/pexels-photo-17935410.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">National · Trampoline Park</span>
+        <span class="photo-card-name">Urban Air / Sky Zone</span>
+        <span class="photo-card-hook">$663M annual sales. Families show up when the space is designed for them.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-concept wide">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">Concept · Maker Space</span>
+        <span class="photo-card-name">Family Maker Studio</span>
+        <span class="photo-card-hook">Low capital. High engagement. A facilitated making space for families — one room with tools and a facilitator beats a passive exhibit every time.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-stl">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/296301/pexels-photo-296301.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">St. Louis · Adaptive Reuse</span>
+        <span class="photo-card-name">Union Station</span>
+        <span class="photo-card-hook">Historic train station → aquarium, Ferris wheel, dining. One shell, multiple verticals.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-concept tall">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/1813946/pexels-photo-1813946.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">Concept · Community Coffee</span>
+        <span class="photo-card-name">The Parent Bar</span>
+        <span class="photo-card-hook">A place for parents to land while kids play. The gap nobody has filled — a third place designed for parents, not just their children.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-national">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/2933105/pexels-photo-2933105.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">National · Indoor Adventure</span>
+        <span class="photo-card-name">Ziplines & Ropes Courses</span>
+        <span class="photo-card-hook">Fritz's Adventure model — vertical adventure inside a vacant box. High perceived value, relatively low buildout.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-concept wide">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/19230314/pexels-photo-19230314.jpeg?auto=compress&cs=tinysrgb&w=1200&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">Concept · LQC Pilot</span>
+        <span class="photo-card-name">Pop-Up Play Space</span>
+        <span class="photo-card-hook">Test the demand before committing capital. Temporary infrastructure, weekend programming, real data in 90 days.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-national">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/1556704/pexels-photo-1556704.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">National · Eatertainment</span>
+        <span class="photo-card-name">Dave & Buster's / Main Event</span>
+        <span class="photo-card-hook">Food + arcade + family programming. Proven anchor tenant that drives traffic to inline spaces.</span>
+      </div>
+    </div>
+
+    <div class="photo-card type-stl">
+      <div class="photo-card-bg" style="background-image:url('https://images.pexels.com/photos/8535214/pexels-photo-8535214.jpeg?auto=compress&cs=tinysrgb&w=800&fit=crop')"></div>
+      <div class="photo-card-label">
+        <span class="photo-card-tag">St. Louis · Science + Making</span>
+        <span class="photo-card-name">St. Louis Science Center</span>
+        <span class="photo-card-hook">Free admission. Maker lab. OMNIMAX. One of the top five science centers in the U.S. The maker space model is replicable at any scale.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REMAINING TEXT CARDS -->
+  <div class="inspiration-text-grid fade-in">
+
+    <div class="inspiration-text-card type-stl">
+      <div class="inspiration-type">St. Louis · Bar + Community</div>
+      <div class="inspiration-name">Dirty Lou / The Neighborhood Bar</div>
+      <p class="inspiration-desc">Low barrier, no agenda, everyone welcome. The bar is just the excuse to gather. The model: a reason to show up and permission to stay.</p>
+      <p class="inspiration-hook">The original third place formula — still works.</p>
+    </div>
+
+    <div class="inspiration-text-card type-stl">
+      <div class="inspiration-type">St. Louis · Children's Museum</div>
+      <div class="inspiration-name">Myseum (Town & Country)</div>
+      <p class="inspiration-desc">Suburban format children's museum and indoor play space. Proof that family destinations don't need downtown real estate or massive capital.</p>
+      <p class="inspiration-hook">Community scale, real demand, replicable model.</p>
+    </div>
+
+    <div class="inspiration-text-card type-national">
+      <div class="inspiration-type">National · Children's Museum</div>
+      <div class="inspiration-name">Children's Museum Network</div>
+      <p class="inspiration-desc">300+ children's museums in the U.S., many in converted retail or industrial space. Nonprofit model opens access to grants, TIF funding, and municipal partnerships.</p>
+      <p class="inspiration-hook">Nonprofit structure unlocks financing commercial FECs can't access.</p>
+    </div>
+
+    <div class="inspiration-text-card type-concept">
+      <div class="inspiration-type">Concept · Mixed Use</div>
+      <div class="inspiration-name">The Community Hub Model</div>
+      <p class="inspiration-desc">Children's play + parent lounge + maker studio + small event space in one anchor footprint. Start with one element, add others as revenue supports it.</p>
+      <p class="inspiration-hook">Phased activation — every stage is its own revenue center.</p>
+    </div>
+
+    <div class="inspiration-text-card type-national">
+      <div class="inspiration-type">National · Board Game Café</div>
+      <div class="inspiration-name">Meeples / Well Played Model</div>
+      <p class="inspiration-desc">Game cafés that combine food, beverage, and hundreds of board games. Family-friendly, socially-driven, low-tech. A proven community gathering format in any retail footprint.</p>
+      <p class="inspiration-hook">A game library + coffee bar is a third place for $40K, not $4M.</p>
+    </div>
+
+    <div class="inspiration-text-card type-national">
+      <div class="inspiration-type">National · Trampoline / Ninja</div>
+      <div class="inspiration-name">Defy / Altitude Trampoline</div>
+      <p class="inspiration-desc">Mid-tier trampoline and ninja course operators. Smaller footprint options available — good fit for inline space or partial anchor conversion at lower capital entry.</p>
+      <p class="inspiration-hook">More accessible entry point for budget-conscious conversions.</p>
+    </div>
+
+    <div class="inspiration-text-card type-stl">
+      <div class="inspiration-type">St. Louis · Maker Space</div>
+      <div class="inspiration-name">Magic House Maker Studio</div>
+      <p class="inspiration-desc">The Magic House's dedicated STEM and making studio. Low cost to replicate, high perceived value, strong driver of memberships and repeat visits.</p>
+      <p class="inspiration-hook">One room, good facilitation, loyal families.</p>
+    </div>
+
+    <div class="inspiration-text-card type-concept">
+      <div class="inspiration-type">Concept · Flexible Programming</div>
+      <div class="inspiration-name">LQC Programming Series</div>
+      <p class="inspiration-desc">Before permanent buildout — weekend events, themed family programming, pop-up activations. Generate foot traffic data and community buy-in before signing leases.</p>
+      <p class="inspiration-hook">Test demand. Build advocates. Then commit capital.</p>
+    </div>
+
+  </div>
+
+  <div class="inspiration-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--rust)"></div> St. Louis Examples</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> National Models</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7ab87f"></div> Emerging Concepts</div>
+  </div>
+  <div style="margin-top:2.5rem; padding-top:2rem; border-top:1px solid rgba(245,240,232,0.1); font-size:0.88rem; line-height:1.7; opacity:0.7; max-width:620px;">
+    <strong style="color:var(--gold); opacity:1;">Worth exploring:</strong> Researcher Ollie Schilling mapped existing third places across St. Louis in 2024 — a useful look at what's already here and where the gaps are. <a href="https://storymaps.arcgis.com/stories/d93c25db7b354b8c958a000620067fa5" target="_blank" style="color:var(--cream); border-bottom:1px solid rgba(245,240,232,0.3); text-decoration:none; transition:border-color 0.2s;">View the Third Places Map →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-photo fade-in">
+    <div class="about-photo-frame">
+      <img src="matt-black.jpeg" alt="Matthew Black, Founder & Principal Consultant, CommonGround Advisory" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+    </div>
+    <p class="about-photo-caption">Matthew Black · St. Louis, MO</p>
+  </div>
+  <div class="fade-in">
+    <div class="section-label">About</div>
+    <div class="about-name">Matthew Black</div>
+    <div class="about-title">Founder & Principal Consultant</div>
+    <p>I'm a project manager and product manager who's spent the last ten years delivering complex work for demanding stakeholders — on scope, on time, and on budget. Before that, I spent a decade as a professional counselor in community mental health, where I learned that you cannot force change. Change requires meeting people where they're at and collaborating to reach their desired outcome.</p>
+    <p>CommonGround is designed to help you build and grow your community's third space.</p>
+    <p>I started this firm because I'm a dad of a grade schooler and a high schooler. I watch the same thing play out in my family that I see in families everywhere. Fewer and fewer places for children and families to have fun. Parents feel expected to provide constant entertainment. There's nowhere to go that isn't a transaction. No place that's just for being together.</p>
+    <p>If you've worked with consultants who were long on vision and short on follow-through, that's the gap I'm trying to close.</p>
+    <p>CommonGround exists to help communities build places where families actually want to be. I'd like to help you build one.</p>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>You have the space.<br><em>We have the strategy.</em></h2>
+  <p>Whether you own a dying mall, manage a vacant anchor box, or are developing the next family entertainment concept — let's talk about what your community is missing.</p>
+  <a href="#contact" class="btn-primary">Start the Conversation →</a>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-info fade-in">
+    <div class="section-label">Get in Touch</div>
+    <h2>Tell us about<br>your <em>space</em>.</h2>
+    <p>Every engagement begins with a free 45-minute discovery call. We want to understand your property, your market, and what you've already tried before we suggest anything. No pitch deck, no sales process. Just a conversation.</p>
+    <div class="contact-detail">
+      <span>Headquarters</span>
+      <strong>St. Louis, Missouri · Serving the Midwest & Beyond</strong>
+      <span style="margin-top:1rem;">Typical clients include</span>
+      <strong>Mall Owners · Developers · Municipal Bodies · FEC Operators</strong>
+    </div>
+  </div>
+
+  <div class="form-card fade-in">
+    <div id="form-content">
+      <div class="form-title">Request a Discovery Call</div>
+      <p class="form-sub">We'll follow up within one business day.</p>
+
+      <form id="inquiry-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="First" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Last" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Organization</label>
+          <input type="text" placeholder="Company / Municipality / LLC" required>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="you@company.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>I am a...</label>
+          <select required>
+            <option value="" disabled selected>Select your role</option>
+            <option>Mall Owner or Property Manager</option>
+            <option>Developer or Investor</option>
+            <option>Municipal or Economic Development</option>
+            <option>FEC Operator or Entrepreneur</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Tell us about your space or challenge</label>
+          <textarea placeholder="What's the situation? Where is the property? What have you already considered?"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary form-submit">Request My Discovery Call →</button>
+      </form>
+    </div>
+
+    <div class="form-success" id="form-success">
+      <div class="success-icon">✓</div>
+      <h3>We'll be in touch.</h3>
+      <p>Thank you for reaching out. A member of our team will contact you within one business day to schedule your complimentary discovery call.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Common<span>Ground</span> Advisory</div>
+  <p>© 2026 CommonGround Advisory LLC · St. Louis, MO · Family Third Space Consultants</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#who">Who We Serve</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<div class="chat-widget" id="chat-widget">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-dot"></div>
+      <div class="chat-header-text">
+        <div class="chat-header-name">CommonGround Assistant</div>
+        <div class="chat-header-sub">Ask about placemaking, grants, or your space</div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">Hi! I can answer questions about placemaking, community space activation, grant funding in St. Louis, or how CommonGround might be able to help. What's on your mind?</div>
+    </div>
+    <div class="chat-starters" id="chat-starters">
+      <button class="chat-starter" onclick="sendStarter(this)">What is a third place?</button>
+      <button class="chat-starter" onclick="sendStarter(this)">What grants are available?</button>
+      <button class="chat-starter" onclick="sendStarter(this)">Is my space a good fit?</button>
+      <button class="chat-starter" onclick="sendStarter(this)">How do I get started?</button>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Ask a question..." onkeydown="if(event.key==='Enter') sendMessage()">
+      <button class="chat-send" onclick="sendMessage()">→</button>
+    </div>
+  </div>
+  <button class="chat-button" onclick="toggleChat()" aria-label="Open chat">
+    <span class="icon-chat">💬</span>
+    <span class="icon-close">✕</span>
+  </button>
+</div>
+
+<script>
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+  }
+
+  // Banner
+  function closeBanner() {
+    const banner = document.getElementById('announcement-banner');
+    banner.style.display = 'none';
+    document.body.classList.remove('banner-visible');
+    sessionStorage.setItem('bannerClosed', '1');
+  }
+
+  if (!sessionStorage.getItem('bannerClosed')) {
+    document.body.classList.add('banner-visible');
+  } else {
+    document.getElementById('announcement-banner').style.display = 'none';
+  }
+
+  // Chat widget
+  const chatHistory = [];
+
+  function toggleChat() {
+    const widget = document.getElementById('chat-widget');
+    widget.classList.toggle('open');
+    if (widget.classList.contains('open')) {
+      setTimeout(() => document.getElementById('chat-input').focus(), 200);
+    }
+  }
+
+  function sendStarter(btn) {
+    const text = btn.textContent;
+    document.getElementById('chat-starters').style.display = 'none';
+    sendMessageText(text);
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    sendMessageText(text);
+  }
+
+  async function sendMessageText(text) {
+    const messages = document.getElementById('chat-messages');
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'chat-msg user';
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+
+    // Add thinking indicator
+    const thinking = document.createElement('div');
+    thinking.className = 'chat-msg thinking';
+    thinking.textContent = 'Thinking...';
+    messages.appendChild(thinking);
+    messages.scrollTop = messages.scrollHeight;
+
+    // Build conversation history
+    chatHistory.push({ role: 'user', content: text });
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: `You are the AI advisor for CommonGround Advisory, a boutique placemaking consultancy based in St. Louis, Missouri. CommonGround helps nonprofits, community organizations, and property owners transform vacant and underused spaces into family-centered third spaces and community destinations.
+
+Your job is to be genuinely useful to anyone who visits the site. Be direct, warm, and specific. Most answers should be 2-4 sentences. Go longer only when a question genuinely requires depth.
+
+What you know deeply:
+- Third place theory (Ray Oldenburg) — the philosophical foundation of why family gathering spaces matter
+- Placemaking principles (Project for Public Spaces, LQC framework)
+- St. Louis community context — 9,000 vacant buildings in the city, active CDA grant programs ($50K-$100K for space activation), the Vacancy Collaborative
+- Family entertainment center industry — trampoline parks, maker spaces, community hubs
+- St. Louis landmarks — Magic House, City Museum, Science Center, Myseum, Union Station
+- CommonGround's services and free nonprofit consultation offer
+
+CommonGround's Services:
+- Space Activation Audit: From $1,500 (free for qualifying nonprofits)
+- Family Destination Strategy: Custom engagement
+- Tenant & Operator Sourcing: Project-based
+- LQC Pilot Design: Low-cost concept testing
+- Community Engagement & Facilitation: Session-based
+- Ongoing Advisory Retainer: From $2,000/month
+
+Free nonprofit offer: CommonGround offers a free in-person site consultation + 5 hours of async digital support for nonprofits and community organizations in the St. Louis area with a vacant space to activate. No fee, no pitch.
+
+Grants available in St. Louis:
+- City CDA Neighborhood Beautification grants: $50K-$100K for 501(c)(3)s activating vacant spaces
+- CDBG non-housing grants: varies, annual
+- RAC arts grants for programming
+- Spirit of St. Louis Women's Fund for small nonprofits
+
+When someone describes a specific property or project, ask one clarifying question to give a better answer. If they seem like a potential client or nonprofit, mention the free discovery call or free nonprofit consultation. Never make up statistics or case studies. Do not pretend to be human if sincerely asked.`,
+          messages: chatHistory
+        })
+      });
+
+      const data = await response.json();
+      const reply = data.content?.[0]?.text || "Sorry, I couldn't get a response. Please try again.";
+
+      chatHistory.push({ role: 'assistant', content: reply });
+
+      thinking.remove();
+
+      const botMsg = document.createElement('div');
+      botMsg.className = 'chat-msg bot';
+      botMsg.textContent = reply;
+      messages.appendChild(botMsg);
+      messages.scrollTop = messages.scrollHeight;
+
+    } catch (err) {
+      thinking.remove();
+      const errMsg = document.createElement('div');
+      errMsg.className = 'chat-msg bot';
+      errMsg.textContent = "Something went wrong on my end. You can also reach us directly through the contact form below.";
+      messages.appendChild(errMsg);
+      messages.scrollTop = messages.scrollHeight;
+    }
+  }
+</script>
+
+</body>
+</html>
