@@ -86,22 +86,39 @@
 
   /* CAT NAV */
   .cat-nav {
-    background: var(--white); padding: 1.25rem 6rem;
-    display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;
+    background: var(--white); padding: 0.9rem 6rem;
+    display: flex; flex-direction: column; gap: 0.6rem;
     border-bottom: 2px solid var(--warm); position: sticky; top: 73px; z-index: 50;
     box-shadow: 0 2px 12px rgba(30,77,43,0.06);
   }
-  .cat-nav-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.4; margin-right: 0.25rem; }
+  .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .cat-nav-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.4; margin-right: 0.25rem; flex-shrink: 0; }
   .cat-pill {
-    padding: 0.45rem 1.1rem; border-radius: 20px; font-size: 0.78rem; font-weight: 500;
-    text-decoration: none; transition: all 0.15s; border: 1.5px solid transparent; white-space: nowrap;
+    padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.78rem; font-weight: 500;
+    cursor: pointer; transition: all 0.15s; border: 1.5px solid transparent; white-space: nowrap;
+    background: #f0f0f0; color: #555; border-color: #ddd; font-family: 'DM Sans', sans-serif;
   }
   .cat-pill:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .cat-pill.active { outline: 2px solid currentColor; outline-offset: 2px; font-weight: 600; }
+  .cat-pill.all.active { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
   .cat-pill.homeowners { background: #e8f5e9; color: #2e7d32; border-color: #81c784; }
   .cat-pill.nonprofits { background: #e3f2fd; color: #1565c0; border-color: #90caf9; }
   .cat-pill.environment { background: #f1f8e9; color: #558b2f; border-color: #aed581; }
   .cat-pill.small-biz { background: #fff8e1; color: #e65100; border-color: #ffcc80; }
   .cat-pill.energy { background: #fce4ec; color: #c2185b; border-color: #f48fb1; }
+  .status-pill {
+    padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.78rem; font-weight: 500;
+    cursor: pointer; transition: all 0.15s; border: 1.5px solid #ddd; white-space: nowrap;
+    background: #f0f0f0; color: #555; font-family: 'DM Sans', sans-serif;
+  }
+  .status-pill:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .status-pill.active { background: var(--green-dark); color: #fff; border-color: var(--green-dark); font-weight: 600; }
+  .grant-hidden { display: none !important; }
+  .grants-count { font-size: 0.78rem; opacity: 0.45; margin-left: auto; align-self: center; }
+  .grants-no-results {
+    text-align: center; padding: 4rem 2rem; color: #999;
+    font-size: 1rem; display: none;
+  }
 
   /* DISCLAIMER */
   .disclaimer {
@@ -273,7 +290,8 @@
     nav { padding: 1rem 1.5rem; }
     nav ul { display: none; }
     .page-hero { padding: 7rem 1.5rem 5rem; }
-    .cat-nav { padding: 1rem 1.5rem; top: 64px; }
+    .cat-nav { padding: 0.75rem 1.5rem; top: 64px; }
+    .cat-pill, .status-pill { font-size: 0.72rem; padding: 0.35rem 0.75rem; }
     .disclaimer { padding: 1rem 1.5rem; }
     .grants-section { padding: 3rem 1.5rem; }
     .grants-grid { grid-template-columns: 1fr; }
@@ -325,13 +343,22 @@
   </div>
 </div>
 
-<nav class="cat-nav">
-  <span class="cat-nav-label">Jump to</span>
-  <a href="#homeowners" class="cat-pill homeowners">🏠 Homeowners</a>
-  <a href="#environment" class="cat-pill environment">🌿 Rainscaping</a>
-  <a href="#nonprofits" class="cat-pill nonprofits">🏛️ Nonprofits</a>
-  <a href="#small-biz" class="cat-pill small-biz">💼 Small Business</a>
-  <a href="#energy" class="cat-pill energy">⚡ Energy & Utilities</a>
+<nav class="cat-nav" aria-label="Filter grants">
+  <div class="filter-row">
+    <span class="cat-nav-label">Category</span>
+    <button class="cat-pill all active" data-category="all">All</button>
+    <button class="cat-pill homeowners" data-category="homeowners">🏠 Homeowners</button>
+    <button class="cat-pill environment" data-category="environment">🌿 Rainscaping</button>
+    <button class="cat-pill nonprofits" data-category="nonprofits">🏛️ Nonprofits</button>
+    <button class="cat-pill small-biz" data-category="small-biz">💼 Small Business</button>
+    <button class="cat-pill energy" data-category="energy">⚡ Energy</button>
+    <span class="grants-count" id="grants-count"></span>
+  </div>
+  <div class="filter-row">
+    <span class="cat-nav-label">Status</span>
+    <button class="status-pill active" data-status="all">All</button>
+    <button class="status-pill" data-status="open-now">Open Now</button>
+  </div>
 </nav>
 
 <div class="disclaimer">
@@ -648,6 +675,10 @@
 </section>
 
 <!-- TIPS -->
+<div class="grants-no-results" id="grants-no-results">
+  <p>No programs match those filters. Try broadening your selection.</p>
+</div>
+
 <div class="tips-band">
   <div class="section-label" style="color:var(--gold)">How to Actually Get This Money</div>
   <h2>Grant writing tips from<br><em>someone who's read the applications</em>.</h2>
@@ -716,10 +747,55 @@
     });
   });
 
-  // Track category nav clicks
-  document.querySelectorAll('.cat-nav a').forEach(function(link) {
-    link.addEventListener('click', function() {
-      track('grants_category_clicked', { category: this.textContent.trim() });
+  // Grant filtering
+  const TOTAL = document.querySelectorAll('.grant-card').length;
+  let activeCategory = 'all';
+  let activeStatus = 'all';
+
+  function filterGrants() {
+    const cards = document.querySelectorAll('.grant-card');
+    let visible = 0;
+
+    cards.forEach(function(card) {
+      const matchCat = activeCategory === 'all' || card.classList.contains(activeCategory);
+      const matchStatus = activeStatus === 'all' || card.classList.contains(activeStatus);
+      const show = matchCat && matchStatus;
+      card.classList.toggle('grant-hidden', !show);
+      if (show) visible++;
+    });
+
+    // Collapse sections with no visible cards
+    document.querySelectorAll('.grants-section').forEach(function(section) {
+      section.classList.toggle('grant-hidden', !section.querySelector('.grant-card:not(.grant-hidden)'));
+    });
+
+    // Result count label (blank when showing all)
+    const countEl = document.getElementById('grants-count');
+    countEl.textContent = visible === TOTAL ? '' : visible + ' program' + (visible !== 1 ? 's' : '');
+
+    // No-results message
+    document.getElementById('grants-no-results').style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  // Category filter buttons
+  document.querySelectorAll('.cat-pill').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.cat-pill').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      activeCategory = this.dataset.category;
+      filterGrants();
+      track('grants_category_filtered', { category: activeCategory });
+    });
+  });
+
+  // Status filter buttons
+  document.querySelectorAll('.status-pill').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.status-pill').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      activeStatus = this.dataset.status;
+      filterGrants();
+      track('grants_status_filtered', { status: activeStatus });
     });
   });
 </script>
