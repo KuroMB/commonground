@@ -550,6 +550,8 @@
     color: #999;
   }
 
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+
   .lc-success {
     font-size: 0.95rem;
     color: var(--sage);
@@ -660,6 +662,7 @@
         <input type="hidden" name="_source" value="chat_brief" />
         <input type="hidden" name="_subject" value="Brief follow-up request" />
         <input type="hidden" name="brief_title" id="lc-brief-title" value="" />
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <button type="submit" id="lc-submit">Request a follow-up →</button>
       </form>
       <p class="lc-fine">We'll be in touch within 48 hours. No spam, ever.</p>
@@ -989,6 +992,10 @@ function downloadBrief() {
 async function submitLeadCapture(e) {
   e.preventDefault();
   const form = document.getElementById('lc-form');
+
+  // Honeypot: silently drop bot submissions
+  if (form.elements['_gotcha']?.value) return;
+
   const btn = document.getElementById('lc-submit');
   btn.disabled = true;
   btn.textContent = 'Sending…';

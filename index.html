@@ -921,6 +921,8 @@
     margin-top: 0.5rem;
   }
 
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+
   /* ── INSPIRATION ── */
   .inspiration {
     background: var(--ink);
@@ -1906,6 +1908,7 @@
           <textarea id="f-message" name="message" placeholder="What's the situation? Where is the property? What have you already considered?"></textarea>
         </div>
 
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <button type="submit" class="btn-primary form-submit" id="form-submit-btn">Request My Discovery Call →</button>
       </form>
     </div>
@@ -1960,8 +1963,11 @@
     if (typeof window.gtag === 'function') window.gtag('event', event, params || {});
   }
 
+  let formFocusedAt = null;
+
   // Fire once when the user first touches the contact form
   document.getElementById('inquiry-form').addEventListener('focusin', function onFormFocus() {
+    formFocusedAt = Date.now();
     track('contact_form_started');
     this.removeEventListener('focusin', onFormFocus);
   });
@@ -1969,6 +1975,13 @@
   // Form submit
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // Honeypot: bots fill hidden fields, humans don't
+    if (e.target.elements['_gotcha']?.value) return;
+
+    // Timing: flag submissions under 2 seconds (bots don't read forms)
+    if (formFocusedAt && Date.now() - formFocusedAt < 2000) return;
+
     const btn = document.getElementById('form-submit-btn');
     btn.disabled = true;
     btn.textContent = 'Sending…';
