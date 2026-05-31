@@ -488,6 +488,74 @@
 
   .btn-email:hover { border-color: var(--sage); }
 
+  /* LEAD CAPTURE */
+  .lead-capture {
+    margin-top: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--cream);
+    border-radius: 10px;
+    border: 1.5px solid var(--warm);
+  }
+
+  .lc-headline {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.85rem;
+  }
+
+  .lc-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lc-form input[type="text"],
+  .lc-form input[type="email"] {
+    flex: 1;
+    min-width: 130px;
+    padding: 0.6rem 0.85rem;
+    border: 1.5px solid var(--warm);
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    background: white;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .lc-form input:focus { border-color: var(--sage); }
+
+  .lc-form button[type="submit"] {
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 0.6rem 1.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+
+  .lc-form button[type="submit"]:hover { background: #a04e2e; }
+  .lc-form button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+
+  .lc-fine {
+    margin-top: 0.55rem;
+    font-size: 0.78rem;
+    color: #999;
+  }
+
+  .lc-success {
+    font-size: 0.95rem;
+    color: var(--sage);
+    font-weight: 500;
+  }
+
   /* MOBILE */
   @media (max-width: 600px) {
     nav { padding: 1rem 1.25rem; }
@@ -577,6 +645,18 @@
   <div class="brief-modal" id="brief-modal">
     <button class="modal-close" onclick="closeOverlay()">×</button>
     <div id="brief-content"></div>
+    <div class="lead-capture" id="lead-capture">
+      <p class="lc-headline">Want us to follow up on this brief?</p>
+      <form class="lc-form" id="lc-form" onsubmit="submitLeadCapture(event)">
+        <input type="text" name="name" placeholder="First name" autocomplete="given-name" />
+        <input type="email" name="email" placeholder="Email address" required autocomplete="email" />
+        <input type="hidden" name="_source" value="chat_brief" />
+        <input type="hidden" name="_subject" value="Brief follow-up request" />
+        <input type="hidden" name="brief_title" id="lc-brief-title" value="" />
+        <button type="submit" id="lc-submit">Request a follow-up →</button>
+      </form>
+      <p class="lc-fine">We'll be in touch within 48 hours. No spam, ever.</p>
+    </div>
     <div class="brief-actions">
       <button class="btn-dl" onclick="downloadBrief()">⬇ Download PDF</button>
       <a class="btn-email" id="email-cta" href="mailto:commonground-adv@gmail.com">✉ Email CommonGround</a>
@@ -794,6 +874,14 @@ function renderBrief(brief) {
   const subject = encodeURIComponent(`${brief.title}: ${brief.project_name}`);
   const body = encodeURIComponent(`Hi,\n\nI just used the CommonGround Advisory tool and generated a ${brief.title} for "${brief.project_name}." I'd love to connect.\n\n`);
   document.getElementById('email-cta').href = `mailto:commonground-adv@gmail.com?subject=${subject}&body=${body}`;
+
+  const titleField = document.getElementById('lc-brief-title');
+  if (titleField) titleField.value = `${brief.title}: ${brief.project_name}`;
+
+  if (sessionStorage.getItem('cg-lead-submitted')) {
+    document.getElementById('lead-capture').innerHTML =
+      '<p class="lc-success">Got it — we\'ll be in touch within 48 hours.</p>';
+  }
 }
 
 function closeOverlay() {
@@ -852,6 +940,31 @@ function downloadBrief() {
   }, { once: true });
 
   window.print();
+}
+
+async function submitLeadCapture(e) {
+  e.preventDefault();
+  const form = document.getElementById('lc-form');
+  const btn = document.getElementById('lc-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const data = new FormData(form);
+    const res = await fetch('https://formspree.io/f/xykvaogr', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error();
+    document.getElementById('lead-capture').innerHTML =
+      '<p class="lc-success">Got it — we\'ll be in touch within 48 hours.</p>';
+    sessionStorage.setItem('cg-lead-submitted', '1');
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Request a follow-up →';
+    btn.insertAdjacentText('afterend', ' — something went wrong, please try again.');
+  }
 }
 
 // textarea auto-resize
