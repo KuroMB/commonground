@@ -15,52 +15,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    --ink: #1a1a18;
-    --cream: #f5f0e8;
-    --warm: #e8dcc8;
-    --rust: #b85c38;
-    --sage: #5a7a5e;
-    --gold: #c9a84c;
-    --light-sage: #e8f0e9;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+  /* Chat needs full-height flex layout on body */
+  body { min-height: 100vh; display: flex; flex-direction: column; }
 
   /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.25rem 3rem;
-    background: rgba(245,240,232,0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(26,26,24,0.08);
-  }
-
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-    text-decoration: none;
-  }
 
   .nav-back {
     font-size: 0.85rem;
@@ -592,8 +552,6 @@
     font-size: 0.78rem;
     color: #999;
   }
-
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
 
   .lc-success {
     font-size: 0.95rem;

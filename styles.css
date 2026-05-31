@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════════════════════
+   CommonGround Advisory — Shared Styles
+   Imported by: index.html, chat.html, grants.html
+   Page-specific styles remain inline in each file.
+   ═══════════════════════════════════════════════════════ */
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+/* Default color palette (warm — index.html + chat.html)
+   grants.html overrides these variables in its own <style> block */
+:root {
+  --ink: #1a1a18;
+  --cream: #f5f0e8;
+  --warm: #e8dcc8;
+  --rust: #b85c38;
+  --sage: #5a7a5e;
+  --gold: #c9a84c;
+  --light-sage: #e8f0e9;
+}
+
+/* Base */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* Nav — warm palette default; grants.html overrides background + border */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(26,26,24,0.08);
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Spam protection honeypot — used on index.html and chat.html forms */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
