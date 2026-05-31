@@ -660,23 +660,23 @@
       </div>
     </div>
     <div class="intake-cards">
-      <div class="intake-card" onclick="selectMode('space')">
-        <span class="card-icon">🏗️</span>
+      <div class="intake-card" role="button" tabindex="0" onclick="selectMode('space')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectMode('space')}">
+        <span class="card-icon" aria-hidden="true">🏗️</span>
         <div class="card-title">A Space</div>
         <div class="card-desc">I have a vacant building, room, or lot I want to activate.</div>
       </div>
-      <div class="intake-card" onclick="selectMode('money')">
-        <span class="card-icon">💰</span>
+      <div class="intake-card" role="button" tabindex="0" onclick="selectMode('money')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectMode('money')}">
+        <span class="card-icon" aria-hidden="true">💰</span>
         <div class="card-title">Capital</div>
         <div class="card-desc">I have funding or investment capacity and want to support community spaces.</div>
       </div>
-      <div class="intake-card" onclick="selectMode('idea')">
-        <span class="card-icon">💡</span>
+      <div class="intake-card" role="button" tabindex="0" onclick="selectMode('idea')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectMode('idea')}">
+        <span class="card-icon" aria-hidden="true">💡</span>
         <div class="card-title">An Idea</div>
         <div class="card-desc">I have a vision for a community space but no property yet.</div>
       </div>
-      <div class="intake-card" onclick="selectMode('need')">
-        <span class="card-icon">🤝</span>
+      <div class="intake-card" role="button" tabindex="0" onclick="selectMode('need')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectMode('need')}">
+        <span class="card-icon" aria-hidden="true">🤝</span>
         <div class="card-title">A Need</div>
         <div class="card-desc">My community is missing something. I want to figure out what to do about it.</div>
       </div>
@@ -685,7 +685,7 @@
 
   <!-- CHAT -->
   <div class="chat-wrap" id="chat-wrap">
-    <div class="mode-pill" id="mode-pill" onclick="resetMode()">
+    <div class="mode-pill" id="mode-pill" role="button" tabindex="0" onclick="resetMode()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();resetMode()}">
       <span id="mode-label"></span>
       <span style="opacity:0.5">· change</span>
     </div>
@@ -711,7 +711,7 @@
 <!-- BRIEF OVERLAY -->
 <div class="overlay" id="overlay" onclick="overlayClick(event)">
   <div class="brief-modal" id="brief-modal">
-    <button class="modal-close" onclick="closeOverlay()">×</button>
+    <button class="modal-close" onclick="closeOverlay()" aria-label="Close brief">×</button>
     <div id="brief-content"></div>
     <div class="lead-capture" id="lead-capture">
       <p class="lc-headline">Want us to follow up on this brief?</p>
