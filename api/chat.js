@@ -143,6 +143,10 @@ export default async function handler(req) {
 
   const { mode, messages, stream = true } = await req.json();
 
+  if (!Array.isArray(messages) || messages.length > 40) {
+    return new Response('Invalid request', { status: 400 });
+  }
+
   const systemPrompt = SYSTEM_PROMPTS[mode];
   if (!systemPrompt) {
     return new Response('Invalid mode', { status: 400 });
