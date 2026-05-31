@@ -2030,31 +2030,31 @@
       <div class="form-title">Request a Discovery Call</div>
       <p class="form-sub">We'll follow up within one business day.</p>
 
-      <form id="inquiry-form" action="https://formspree.io/f/xykvaogr" method="POST" onsubmit="handleSubmit(event)">
+      <form id="inquiry-form" onsubmit="handleSubmit(event)">
         <div class="form-row">
           <div class="form-group">
             <label>First Name</label>
-            <input type="text" placeholder="First" required>
+            <input type="text" name="first_name" placeholder="First" required>
           </div>
           <div class="form-group">
             <label>Last Name</label>
-            <input type="text" placeholder="Last" required>
+            <input type="text" name="last_name" placeholder="Last" required>
           </div>
         </div>
 
         <div class="form-group">
           <label>Organization</label>
-          <input type="text" placeholder="Company / Municipality / LLC" required>
+          <input type="text" name="organization" placeholder="Company / Municipality / LLC" required>
         </div>
 
         <div class="form-group">
           <label>Email</label>
-          <input type="email" placeholder="you@company.com" required>
+          <input type="email" name="email" placeholder="you@company.com" required>
         </div>
 
         <div class="form-group">
           <label>I am a...</label>
-          <select required>
+          <select name="role" required>
             <option value="" disabled selected>Select your role</option>
             <option>Mall Owner or Property Manager</option>
             <option>Developer or Investor</option>
@@ -2066,10 +2066,10 @@
 
         <div class="form-group">
           <label>Tell us about your space or challenge</label>
-          <textarea placeholder="What's the situation? Where is the property? What have you already considered?"></textarea>
+          <textarea name="message" placeholder="What's the situation? Where is the property? What have you already considered?"></textarea>
         </div>
 
-        <button type="submit" class="btn-primary form-submit">Request My Discovery Call →</button>
+        <button type="submit" class="btn-primary form-submit" id="form-submit-btn">Request My Discovery Call →</button>
       </form>
     </div>
 
@@ -2149,10 +2149,34 @@
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   // Form submit
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    document.getElementById('form-content').style.display = 'none';
-    document.getElementById('form-success').classList.add('show');
+    const btn = document.getElementById('form-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch('https://formspree.io/f/xykvaogr', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        document.getElementById('form-content').style.display = 'none';
+        document.getElementById('form-success').classList.add('show');
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Request My Discovery Call →';
+        alert('Something went wrong. Please try again or email us directly.');
+      }
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Request My Discovery Call →';
+      alert('Something went wrong. Please try again or email us directly.');
+    }
   }
 
   // Banner
