@@ -1398,6 +1398,7 @@
     .hero-left h1 { font-size: 2.2rem; }
   }
 </style>
+<script defer data-domain="commonground-mu.vercel.app" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
@@ -1949,6 +1950,16 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+  function track(event, props) {
+    if (typeof window.plausible === 'function') window.plausible(event, { props });
+  }
+
+  // Fire once when the user first touches the contact form
+  document.getElementById('inquiry-form').addEventListener('focusin', function onFormFocus() {
+    track('Contact Form Started');
+    this.removeEventListener('focusin', onFormFocus);
+  });
+
   // Form submit
   async function handleSubmit(e) {
     e.preventDefault();
@@ -1958,6 +1969,7 @@
 
     const form = e.target;
     const data = Object.fromEntries(new FormData(form));
+    track('Contact Form Submitted');
 
     try {
       const res = await fetch('https://formspree.io/f/xykvaogr', {
@@ -1968,14 +1980,17 @@
       if (res.ok) {
         document.getElementById('form-content').style.display = 'none';
         document.getElementById('form-success').classList.add('show');
+        track('Contact Form Success');
       } else {
         btn.disabled = false;
         btn.textContent = 'Request My Discovery Call →';
+        track('Contact Form Error');
         alert('Something went wrong. Please try again or email us directly.');
       }
     } catch {
       btn.disabled = false;
       btn.textContent = 'Request My Discovery Call →';
+      track('Contact Form Error');
       alert('Something went wrong. Please try again or email us directly.');
     }
   }
