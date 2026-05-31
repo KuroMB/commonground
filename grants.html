@@ -42,12 +42,12 @@
     border-bottom: 1px solid rgba(30,77,43,0.12);
   }
   .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); text-decoration: none; }
-  .nav-logo span { color: var(--green-mid); }
+  .nav-logo span { color: #b85c38; }
   nav ul { list-style: none; display: flex; gap: 2rem; }
   nav ul a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
   nav ul a:hover { opacity: 1; }
-  .nav-cta { background: var(--green-mid); color: var(--cream) !important; padding: 0.5rem 1.25rem; border-radius: 2px; opacity: 1 !important; }
-  .nav-cta:hover { background: var(--green-dark) !important; }
+  .nav-cta { background: #b85c38; color: var(--cream) !important; padding: 0.5rem 1.25rem; border-radius: 2px; opacity: 1 !important; }
+  .nav-cta:hover { background: #a04e2e !important; }
 
   /* HERO */
   .page-hero {
@@ -112,6 +112,42 @@
   .disclaimer-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
 
   /* SECTIONS */
+  /* CONSULT STRIP */
+  .consult-strip {
+    background: #f5f0e8;
+    border-top: 3px solid #b85c38;
+    padding: 1.25rem 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .consult-strip p {
+    font-size: 0.92rem;
+    color: #1a1a18;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .consult-strip p strong { font-weight: 600; }
+  .consult-strip a {
+    background: #b85c38;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.55rem 1.25rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .consult-strip a:hover { background: #a04e2e; }
+
+  @media (max-width: 600px) {
+    .consult-strip { padding: 1.25rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+
   .grants-section { padding: 4.5rem 6rem; }
   .grants-section:nth-child(odd) { background: var(--cream); }
   .grants-section:nth-child(even) { background: var(--white); }
@@ -227,7 +263,7 @@
     display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
   }
   .footer-logo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--cream); text-decoration: none; }
-  .footer-logo span { color: var(--green-light); }
+  .footer-logo span { color: var(--gold); }
   footer p { font-size: 0.75rem; opacity: 0.35; max-width: 480px; line-height: 1.6; }
   .footer-links { display: flex; gap: 2rem; }
   .footer-links a { font-size: 0.75rem; color: var(--cream); text-decoration: none; opacity: 0.4; letter-spacing: 0.08em; text-transform: uppercase; transition: opacity 0.2s; }
@@ -259,12 +295,12 @@
 <body>
 
 <nav>
-  <a href="commonground.html" class="nav-logo">Common<span>Ground</span> Advisory</a>
+  <a href="index.html" class="nav-logo">Common<span>Ground</span> Advisory</a>
   <ul>
-    <li><a href="commonground.html#nonprofits">For Nonprofits</a></li>
-    <li><a href="commonground.html#services">Services</a></li>
-    <li><a href="commonground.html#about">About</a></li>
-    <li><a href="commonground.html#contact" class="nav-cta">Talk to Us</a></li>
+    <li><a href="index.html#nonprofits">For Nonprofits</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Talk to Us</a></li>
   </ul>
 </nav>
 
@@ -300,7 +336,12 @@
 
 <div class="disclaimer">
   <span class="disclaimer-icon">⚠️</span>
-  <span><strong>Heads up:</strong> Grant programs open and close. Always verify current deadlines directly with the funding source before investing time in an application. This page was last updated May 2026. If you spot something outdated, <a href="commonground.html#contact" style="color:var(--green-mid)">let us know</a>.</span>
+  <span><strong>Heads up:</strong> Grant programs open and close. Always verify current deadlines directly with the funding source before investing time in an application. This page was last updated May 2026. If you spot something outdated, <a href="index.html#contact" style="color:var(--green-mid)">let us know</a>.</span>
+</div>
+
+<div class="consult-strip">
+  <p><strong>Working on a nonprofit or community space project?</strong> Common Ground helps organizations figure out which grants fit, prepare stronger applications, and sequence funding for activation projects.</p>
+  <a href="index.html#contact">Book a Free Consultation →</a>
 </div>
 
 <!-- HOMEOWNERS -->
@@ -648,16 +689,16 @@
 <div class="page-cta">
   <h2>Working on a community<br>space project? <em>We can help.</em></h2>
   <p>CommonGround offers free consultations for nonprofits and community organizations in the St. Louis area. We'll help you figure out which grants fit and what a realistic first step looks like.</p>
-  <a href="commonground.html#contact" class="btn-primary">Request Free Consultation</a>
+  <a href="index.html#contact" class="btn-primary">Request Free Consultation</a>
 </div>
 
 <footer>
-  <a href="commonground.html" class="footer-logo">Common<span>Ground</span> Advisory</a>
+  <a href="index.html" class="footer-logo">Common<span>Ground</span> Advisory</a>
   <p>© 2026 CommonGround Advisory · St. Louis, MO · This is a free community resource. Verify all program details directly with funding sources before applying.</p>
   <div class="footer-links">
-    <a href="commonground.html#nonprofits">For Nonprofits</a>
-    <a href="commonground.html#services">Services</a>
-    <a href="commonground.html#contact">Contact</a>
+    <a href="index.html#nonprofits">For Nonprofits</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#contact">Contact</a>
   </div>
 </footer>
 
