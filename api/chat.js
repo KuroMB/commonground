@@ -127,14 +127,18 @@ Tone: validating and practical. This person may feel like they're shouting into 
 };
 
 export default async function handler(req) {
+  const origin = req.headers.get('origin') || '';
+  const allowed = ['https://commonground-mu.vercel.app', 'https://commonground-advisory.vercel.app'];
+  const corsOrigin = allowed.includes(origin) ? origin : allowed[0];
+
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': corsOrigin,
+    'Access-Control-Allow-Methods': 'POST',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  };
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      }
-    });
+    return new Response(null, { headers: corsHeaders });
   }
 
   if (req.method !== 'POST') {
@@ -174,15 +178,12 @@ export default async function handler(req) {
 
   if (stream) {
     return new Response(groqRes.body, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache'
-      }
+      headers: { ...corsHeaders, 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' }
     });
   }
 
   const data = await groqRes.json();
   return new Response(JSON.stringify(data), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' }
   });
 }
