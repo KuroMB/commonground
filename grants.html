@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://commonground-mu.vercel.app/grants.html"/>
 <meta property="og:type" content="website"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>"/>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -166,6 +166,7 @@
   .section-header { margin-bottom: 2.5rem; display: flex; align-items: flex-start; gap: 1.25rem; }
   .section-icon { font-size: 2.5rem; line-height: 1; flex-shrink: 0; margin-top: 0.25rem; }
   .section-label { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green-mid); margin-bottom: 0.4rem; }
+  .section-verified { font-size: 0.68rem; color: #888; margin-top: 0.5rem; }
   .grants-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem; color: var(--green-dark); }
   .grants-section h2 em { font-style: italic; color: var(--green-mid); }
   .section-intro { font-size: 0.9rem; line-height: 1.75; opacity: 0.65; max-width: 680px; }
@@ -366,7 +367,7 @@
 </div>
 
 <!-- HOMEOWNERS -->
-<section class="grants-section" id="homeowners">
+<section class="grants-section" id="homeowners" data-verified="2026-05">
   <div class="section-header">
     <div class="section-icon">🏠</div>
     <div>
@@ -431,7 +432,7 @@
 </section>
 
 <!-- ENVIRONMENT -->
-<section class="grants-section" id="environment">
+<section class="grants-section" id="environment" data-verified="2026-05">
   <div class="section-header">
     <div class="section-icon">🌿</div>
     <div>
@@ -499,7 +500,7 @@
 </section>
 
 <!-- NONPROFITS -->
-<section class="grants-section" id="nonprofits">
+<section class="grants-section" id="nonprofits" data-verified="2026-05">
   <div class="section-header">
     <div class="section-icon">🏛️</div>
     <div>
@@ -563,7 +564,7 @@
 </section>
 
 <!-- SMALL BUSINESS -->
-<section class="grants-section" id="small-biz">
+<section class="grants-section" id="small-biz" data-verified="2026-05">
   <div class="section-header">
     <div class="section-icon">💼</div>
     <div>
@@ -603,7 +604,7 @@
 </section>
 
 <!-- ENERGY -->
-<section class="grants-section" id="energy">
+<section class="grants-section" id="energy" data-verified="2026-05">
   <div class="section-header">
     <div class="section-icon">⚡</div>
     <div>
@@ -731,6 +732,34 @@
   function track(event, params) {
     if (typeof window.gtag === 'function') window.gtag('event', event, params || {});
   }
+
+  // Render "Verified: Month Year" badge into each section header
+  document.querySelectorAll('.grants-section[data-verified]').forEach(function(section) {
+    const raw = section.dataset.verified; // "YYYY-MM"
+    const d = new Date(raw + '-02');
+    const label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const intro = section.querySelector('.section-intro');
+    if (intro) {
+      const badge = document.createElement('p');
+      badge.className = 'section-verified';
+      badge.textContent = 'Verified ' + label;
+      intro.after(badge);
+    }
+  });
+
+  // Update disclaimer to show the oldest verified date across all sections
+  (function() {
+    const dates = [...document.querySelectorAll('.grants-section[data-verified]')]
+      .map(function(s) { return s.dataset.verified; })
+      .sort();
+    if (!dates.length) return;
+    const oldest = new Date(dates[0] + '-02');
+    const label = oldest.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const disclaimer = document.querySelector('.disclaimer span:last-child');
+    if (disclaimer) {
+      disclaimer.innerHTML = disclaimer.innerHTML.replace(/last updated [A-Za-z]+ \d{4}/i, 'last updated ' + label);
+    }
+  })();
 
   // Track grant link clicks — capture the grant name from the card heading
   document.querySelectorAll('.grant-link').forEach(function(link) {
