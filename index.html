@@ -1194,6 +1194,47 @@
 
   .form-success p { font-size: 0.9rem; opacity: 0.7; line-height: 1.6; }
 
+  .success-next {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--warm);
+  }
+
+  .success-next-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 0.85rem;
+  }
+
+  .success-next-links {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .success-next-links a {
+    display: block;
+    background: white;
+    border: 1.5px solid var(--warm);
+    border-radius: 10px;
+    padding: 0.85rem 1.25rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: border-color 0.15s, transform 0.1s;
+    min-width: 160px;
+  }
+
+  .success-next-links a:hover { border-color: var(--sage); transform: translateY(-1px); }
+
+  .success-next-links .snl-icon { font-size: 1.1rem; display: block; margin-bottom: 0.3rem; }
+  .success-next-links .snl-title { display: block; }
+  .success-next-links .snl-sub { display: block; font-size: 0.76rem; opacity: 0.5; font-weight: 400; margin-top: 0.15rem; }
+
   /* ── ANNOUNCEMENT BANNER ── */
   .announcement-banner {
     background: var(--sage);
@@ -1916,7 +1957,22 @@
     <div class="form-success" id="form-success">
       <div class="success-icon">✓</div>
       <h3>We'll be in touch.</h3>
-      <p>Thank you for reaching out. A member of our team will contact you within one business day to schedule your complimentary discovery call.</p>
+      <p>Thank you for reaching out. We'll contact you within one business day to schedule your complimentary discovery call.</p>
+      <div class="success-next">
+        <div class="success-next-label">In the meantime</div>
+        <div class="success-next-links">
+          <a href="grants.html">
+            <span class="snl-icon">💰</span>
+            <span class="snl-title">Grants Guide</span>
+            <span class="snl-sub">Free money in St. Louis</span>
+          </a>
+          <a href="chat.html">
+            <span class="snl-icon">📋</span>
+            <span class="snl-title">Project Brief Tool</span>
+            <span class="snl-sub">Build a brief in 10 min</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
