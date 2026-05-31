@@ -1,5 +1,28 @@
 export const config = { runtime: 'edge' };
 
+const rateLimitMap = new Map();
+const RATE_LIMIT_MAX = 20;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    rateLimitMap.set(ip, { count: 1, windowStart: now });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return true;
+  entry.count++;
+  return false;
+}
+
+function cleanupRateLimitMap() {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap.entries()) {
+    if (now - entry.windowStart > RATE_LIMIT_WINDOW_MS) rateLimitMap.delete(ip);
+  }
+}
+
 const SYSTEM_PROMPTS = {
   space: `You are a consultation assistant for CommonGround Advisory, a St. Louis-based placemaking consultancy that helps nonprofits and community organizations activate vacant spaces into thriving third places.
 
@@ -143,6 +166,19 @@ export default async function handler(req) {
 
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 });
+  }
+
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim()
+    || req.headers.get('x-real-ip')
+    || 'unknown';
+
+  if (Math.random() < 0.01) cleanupRateLimitMap();
+
+  if (isRateLimited(ip)) {
+    return new Response('Too many requests. Please wait a few minutes before trying again.', {
+      status: 429,
+      headers: { ...corsHeaders, 'Retry-After': '600' }
+    });
   }
 
   const { mode, messages, stream = true } = await req.json();

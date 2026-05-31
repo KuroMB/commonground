@@ -691,6 +691,11 @@ async function sendMessage() {
     });
 
     hideTyping();
+    if (res.status === 429) {
+      addMessage('bot', 'You\'ve sent a lot of messages in a short time — please wait a few minutes and try again.');
+      document.getElementById('send-btn').disabled = false;
+      return;
+    }
     if (!res.ok) throw new Error('API error');
 
     const bub = addMessage('bot', '');
