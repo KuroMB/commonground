@@ -192,24 +192,36 @@ export default async function handler(req) {
     return new Response('Invalid mode', { status: 400 });
   }
 
-  const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'system', content: systemPrompt }, ...messages],
-      stream,
-      temperature: 0.7,
-      max_tokens: stream ? 1024 : 2048
-    })
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25000);
+
+  let groqRes;
+  try {
+    groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'system', content: systemPrompt }, ...messages],
+        stream,
+        temperature: 0.7,
+        max_tokens: stream ? 1024 : 2048
+      }),
+      signal: controller.signal
+    });
+  } catch (err) {
+    clearTimeout(timeout);
+    const msg = err.name === 'AbortError' ? 'Groq request timed out' : 'Failed to reach Groq';
+    return new Response(msg, { status: 504, headers: corsHeaders });
+  }
+  clearTimeout(timeout);
 
   if (!groqRes.ok) {
     const err = await groqRes.text();
-    return new Response(`Groq error: ${err}`, { status: 500 });
+    return new Response(`Groq error: ${err}`, { status: 500, headers: corsHeaders });
   }
 
   if (stream) {
@@ -219,6 +231,15 @@ export default async function handler(req) {
   }
 
   const data = await groqRes.json();
+
+  // Strip markdown code fences LLMs sometimes wrap JSON in (```json ... ```)
+  if (data.choices?.[0]?.message?.content) {
+    data.choices[0].message.content = data.choices[0].message.content
+      .replace(/^```(?:json)?\s*/i, '')
+      .replace(/\s*```\s*$/i, '')
+      .trim();
+  }
+
   return new Response(JSON.stringify(data), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' }
   });

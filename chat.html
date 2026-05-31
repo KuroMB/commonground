@@ -686,6 +686,7 @@ let mode = null;
 let messages = [];
 let exchanges = 0;
 let currentBrief = null;
+let briefAttempts = 0;
 
 function track(event, params) {
   if (typeof window.gtag === 'function') window.gtag('event', event, params || {});
@@ -700,6 +701,7 @@ function selectMode(m) {
   messages = [];
   exchanges = 0;
   currentBrief = null;
+  briefAttempts = 0;
   document.getElementById('messages').innerHTML = '';
   document.getElementById('gen-btn').classList.remove('show');
   addMessage('bot', cfg.opening);
@@ -831,6 +833,7 @@ async function generateBrief() {
   const btn = document.getElementById('gen-btn');
   btn.disabled = true;
   btn.textContent = 'Generating your brief…';
+  briefAttempts++;
   showTyping();
 
   try {
@@ -845,7 +848,19 @@ async function generateBrief() {
     });
 
     hideTyping();
-    if (!res.ok) throw new Error();
+
+    if (res.status === 429) {
+      addMessage('bot', 'You\'ve hit the request limit — please wait a few minutes and try again.');
+      btn.disabled = false;
+      btn.textContent = 'Generate My Brief →';
+      return;
+    }
+
+    if (res.status === 504) {
+      throw new Error('timeout');
+    }
+
+    if (!res.ok) throw new Error('api');
 
     const data = await res.json();
     const raw = data.choices?.[0]?.message?.content || '';
@@ -855,17 +870,31 @@ async function generateBrief() {
     catch {
       const m = raw.match(/\{[\s\S]*\}/);
       if (m) brief = JSON.parse(m[0]);
-      else throw new Error('Bad JSON');
+      else throw new Error('parse');
     }
 
+    briefAttempts = 0;
     currentBrief = brief;
     renderBrief(brief);
     document.getElementById('overlay').classList.add('open');
     track('brief_generated', { mode });
 
-  } catch {
+  } catch (err) {
     hideTyping();
-    addMessage('bot', 'I had trouble generating the brief — try clicking the button once more.');
+    track('brief_generation_failed', { mode, attempt: briefAttempts, reason: err.message || 'unknown' });
+
+    if (briefAttempts >= 2) {
+      addMessage('bot', 'We\'re having persistent trouble on our end. Please email us at commonground-adv@gmail.com and we\'ll help you directly — your conversation notes are still here.');
+      btn.classList.remove('show');
+    } else {
+      const msg = err.message === 'timeout'
+        ? 'That took too long — please try generating once more.'
+        : 'I had a bit of trouble formatting the brief — please try once more.';
+      addMessage('bot', msg);
+      btn.disabled = false;
+      btn.textContent = 'Generate My Brief →';
+    }
+    return;
   }
 
   btn.disabled = false;
