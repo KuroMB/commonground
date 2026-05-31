@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f0e8"/>
+      <stop offset="100%" style="stop-color:#e8dcc8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Left accent bar -->
+  <rect x="0" y="0" width="8" height="630" fill="#5a7a5e"/>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="594" width="1200" height="6" fill="#c9a84c"/>
+
+  <!-- Decorative corner marks -->
+  <rect x="80" y="80" width="40" height="3" fill="#b85c38"/>
+  <rect x="80" y="80" width="3" height="40" fill="#b85c38"/>
+  <rect x="1080" y="80" width="40" height="3" fill="#b85c38"/>
+  <rect x="1117" y="80" width="3" height="40" fill="#b85c38"/>
+  <rect x="80" y="547" width="40" height="3" fill="#b85c38"/>
+  <rect x="80" y="510" width="3" height="40" fill="#b85c38"/>
+  <rect x="1080" y="547" width="40" height="3" fill="#b85c38"/>
+  <rect x="1117" y="510" width="3" height="40" fill="#b85c38"/>
+
+  <!-- Wordmark -->
+  <text x="600" y="260" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700" fill="#1a1a18" text-anchor="middle" letter-spacing="2">Common Ground</text>
+  <text x="600" y="350" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700" fill="#1a1a18" text-anchor="middle" letter-spacing="2">Advisory</text>
+
+  <!-- Divider -->
+  <rect x="480" y="390" width="240" height="2" fill="#c9a84c"/>
+
+  <!-- Tagline -->
+  <text x="600" y="440" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="300" fill="#5a7a5e" text-anchor="middle" letter-spacing="4">FAMILY THIRD SPACE CONSULTANTS</text>
+</svg>
