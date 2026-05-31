@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Here — CommonGround Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a18;
+    --cream: #f5f0e8;
+    --warm: #e8dcc8;
+    --rust: #b85c38;
+    --sage: #5a7a5e;
+    --gold: #c9a84c;
+    --light-sage: #e8f0e9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(26,26,24,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-back {
+    font-size: 0.85rem;
+    color: var(--sage);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* PAGE */
+  .page {
+    padding-top: 72px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* INTAKE */
+  .intake {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .intake h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .intake h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .intake-sub {
+    color: #777;
+    font-size: 1.05rem;
+    font-weight: 300;
+    margin-bottom: 3rem;
+    max-width: 480px;
+  }
+
+  .intake-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 580px;
+    width: 100%;
+  }
+
+  .intake-card {
+    background: white;
+    border: 1.5px solid var(--warm);
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    user-select: none;
+  }
+
+  .intake-card:hover {
+    border-color: var(--sage);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,26,24,0.07);
+  }
+
+  .intake-card:active { transform: translateY(0); }
+
+  .card-icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.85rem;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--ink);
+  }
+
+  .card-desc {
+    font-size: 0.83rem;
+    color: #888;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* CHAT */
+  .chat-wrap {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 2rem;
+  }
+
+  .chat-wrap.active { display: flex; }
+
+  .mode-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--light-sage);
+    border: 1px solid rgba(90,122,94,0.25);
+    color: var(--sage);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    margin-bottom: 1.25rem;
+    width: fit-content;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .mode-pill:hover { background: #d8ebd9; }
+
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    min-height: 320px;
+    max-height: 52vh;
+    padding: 0.25rem 0;
+    scroll-behavior: smooth;
+  }
+
+  .msg {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+  }
+
+  .msg.user { flex-direction: row-reverse; }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-top: 2px;
+  }
+
+  .msg.bot .avatar { background: var(--sage); color: white; }
+  .msg.user .avatar { background: var(--warm); color: var(--ink); }
+
+  .bubble {
+    max-width: 78%;
+    padding: 0.85rem 1.1rem;
+    border-radius: 14px;
+    font-size: 0.94rem;
+    line-height: 1.68;
+  }
+
+  .msg.bot .bubble {
+    background: white;
+    border: 1px solid var(--warm);
+    border-top-left-radius: 3px;
+  }
+
+  .msg.user .bubble {
+    background: var(--sage);
+    color: white;
+    border-top-right-radius: 3px;
+  }
+
+  .typing {
+    display: flex;
+    gap: 4px;
+    padding: 0.85rem 1.1rem;
+    background: white;
+    border: 1px solid var(--warm);
+    border-radius: 14px;
+    border-top-left-radius: 3px;
+    width: fit-content;
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    background: var(--sage);
+    border-radius: 50%;
+    animation: bounce 1.3s infinite;
+  }
+
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+    30% { transform: translateY(-7px); opacity: 1; }
+  }
+
+  /* INPUT */
+  .input-row {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-end;
+    margin-top: 1.25rem;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: white;
+    border: 1.5px solid var(--warm);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.94rem;
+    color: var(--ink);
+    resize: none;
+    min-height: 48px;
+    max-height: 120px;
+    outline: none;
+    transition: border-color 0.2s;
+    line-height: 1.5;
+  }
+
+  .chat-input:focus { border-color: var(--sage); }
+  .chat-input::placeholder { color: #bbb; }
+
+  .send-btn {
+    background: var(--sage);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+
+  .send-btn:hover:not(:disabled) { background: #4a6a4e; }
+  .send-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+  /* GENERATE BUTTON */
+  .gen-btn {
+    margin-top: 1.25rem;
+    width: 100%;
+    background: var(--rust);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.95rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+    display: none;
+    letter-spacing: 0.01em;
+  }
+
+  .gen-btn.show { display: block; }
+  .gen-btn:hover:not(:disabled) { background: #a04e30; }
+  .gen-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  /* PRIVACY */
+  .privacy {
+    text-align: center;
+    padding: 1.25rem 1rem;
+    font-size: 0.78rem;
+    color: #bbb;
+    letter-spacing: 0.01em;
+  }
+
+  .privacy strong { color: var(--sage); font-weight: 500; }
+
+  /* BRIEF OVERLAY */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,26,24,0.55);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    backdrop-filter: blur(2px);
+  }
+
+  .overlay.open { display: flex; }
+
+  .brief-modal {
+    background: var(--cream);
+    border-radius: 16px;
+    max-width: 660px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 2.5rem;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.1rem; right: 1.25rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #bbb;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+
+  .modal-close:hover { color: var(--ink); }
+
+  .brief-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 0.5rem;
+  }
+
+  .brief-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+
+  .brief-meta {
+    color: #999;
+    font-size: 0.88rem;
+    margin-bottom: 0;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--warm);
+    margin-bottom: 1.75rem;
+  }
+
+  .brief-section { margin-bottom: 1.6rem; }
+
+  .brief-section h3 {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rust);
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--warm);
+    margin-bottom: 0.6rem;
+  }
+
+  .brief-section p {
+    font-size: 0.92rem;
+    line-height: 1.78;
+    color: var(--ink);
+  }
+
+  .brief-footer-bar {
+    margin-top: 2rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--warm);
+    font-size: 0.78rem;
+    color: #bbb;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .brief-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .btn-dl {
+    flex: 1;
+    background: var(--sage);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 0.9rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.94rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-align: center;
+  }
+
+  .btn-dl:hover { background: #4a6a4e; }
+
+  .btn-email {
+    flex: 1;
+    background: white;
+    color: var(--ink);
+    border: 1.5px solid var(--warm);
+    border-radius: 9px;
+    padding: 0.9rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.94rem;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    line-height: 1.4;
+  }
+
+  .btn-email:hover { border-color: var(--sage); }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.25rem; }
+    .intake { padding: 2.5rem 1.25rem; }
+    .intake-cards { grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+    .intake-card { padding: 1.25rem 1rem; }
+    .card-icon { font-size: 1.35rem; }
+    .card-title { font-size: 1rem; }
+    .chat-wrap { padding: 1rem 1rem 1.5rem; }
+    .bubble { max-width: 88%; font-size: 0.9rem; }
+    .brief-modal { padding: 1.75rem 1.25rem; border-radius: 12px; }
+    .brief-actions { flex-direction: column; }
+  }
+
+  /* PRINT */
+  @media print {
+    body > *:not(#__cg-print__) { display: none !important; }
+    #__cg-print__ { display: block !important; }
+  }
+  #__cg-print__ { display: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Common Ground Advisory</a>
+  <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<div class="page">
+
+  <!-- INTAKE -->
+  <div class="intake" id="intake">
+    <h1>What do you <em>bring</em><br>to the table?</h1>
+    <p class="intake-sub">Tell us where you're starting — we'll help you figure out the next step and build a document you can take somewhere.</p>
+    <div class="intake-cards">
+      <div class="intake-card" onclick="selectMode('space')">
+        <span class="card-icon">🏗️</span>
+        <div class="card-title">A Space</div>
+        <div class="card-desc">I have a vacant building, room, or lot I want to activate.</div>
+      </div>
+      <div class="intake-card" onclick="selectMode('money')">
+        <span class="card-icon">💰</span>
+        <div class="card-title">Capital</div>
+        <div class="card-desc">I have funding or investment capacity and want to support community spaces.</div>
+      </div>
+      <div class="intake-card" onclick="selectMode('idea')">
+        <span class="card-icon">💡</span>
+        <div class="card-title">An Idea</div>
+        <div class="card-desc">I have a vision for a community space but no property yet.</div>
+      </div>
+      <div class="intake-card" onclick="selectMode('need')">
+        <span class="card-icon">🤝</span>
+        <div class="card-title">A Need</div>
+        <div class="card-desc">My community is missing something. I want to figure out what to do about it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-wrap" id="chat-wrap">
+    <div class="mode-pill" id="mode-pill" onclick="resetMode()">
+      <span id="mode-label"></span>
+      <span style="opacity:0.5">· change</span>
+    </div>
+    <div class="messages" id="messages"></div>
+    <div class="input-row">
+      <textarea class="chat-input" id="chat-input" placeholder="Type your message…" rows="1"></textarea>
+      <button class="send-btn" id="send-btn" onclick="sendMessage()" aria-label="Send">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+    <button class="gen-btn" id="gen-btn" onclick="generateBrief()">Generate My Brief →</button>
+  </div>
+
+  <div class="privacy">
+    <strong>🔒 Private by design.</strong> Your conversation is never stored or used to train any model.
+  </div>
+
+</div>
+
+<!-- BRIEF OVERLAY -->
+<div class="overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="brief-modal" id="brief-modal">
+    <button class="modal-close" onclick="closeOverlay()">×</button>
+    <div id="brief-content"></div>
+    <div class="brief-actions">
+      <button class="btn-dl" onclick="downloadBrief()">⬇ Download PDF</button>
+      <a class="btn-email" id="email-cta" href="mailto:commonground-adv@gmail.com">✉ Email CommonGround</a>
+    </div>
+  </div>
+</div>
+
+<!-- PRINT TARGET -->
+<div id="__cg-print__"></div>
+
+<script>
+const MODES = {
+  space: { label: '🏗️ Space Owner', artifact: 'Project Activation Brief', opening: "Welcome. You have a space — that's further along than most people think.\n\nTell me about it. What's the rough size, where is it, and what's its current condition?" },
+  money: { label: '💰 Capital to Deploy', artifact: 'Investment Opportunity Brief', opening: "Good — capital is the piece most community projects are missing. Let's figure out where it would do the most good.\n\nWhat's driving your interest in community spaces? Are you a foundation, an individual investor, a business looking to invest locally, or something else?" },
+  idea: { label: '💡 Dream Builder', artifact: 'Vision & Feasibility Brief', opening: "An idea without a space is closer to reality than most people think. Let's build it out.\n\nDescribe the vision — what do you see when you picture this space existing? Who's there, what are they doing?" },
+  need: { label: '🤝 Community Need', artifact: 'Community Impact Statement', opening: "Recognizing a gap is the first step — and often the hardest.\n\nWhat's missing? Describe it in plain terms — what do people in your community need that doesn't exist right now?" }
+};
+
+let mode = null;
+let messages = [];
+let exchanges = 0;
+let currentBrief = null;
+
+function selectMode(m) {
+  mode = m;
+  const cfg = MODES[m];
+  document.getElementById('intake').style.display = 'none';
+  document.getElementById('chat-wrap').classList.add('active');
+  document.getElementById('mode-label').textContent = cfg.label;
+  messages = [];
+  exchanges = 0;
+  currentBrief = null;
+  document.getElementById('messages').innerHTML = '';
+  document.getElementById('gen-btn').classList.remove('show');
+  addMessage('bot', cfg.opening);
+  messages.push({ role: 'assistant', content: cfg.opening });
+  document.getElementById('chat-input').focus();
+}
+
+function resetMode() {
+  mode = null;
+  messages = [];
+  document.getElementById('chat-wrap').classList.remove('active');
+  document.getElementById('intake').style.display = '';
+}
+
+function addMessage(role, text) {
+  const wrap = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = role === 'bot' ? 'CG' : 'You';
+
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.innerHTML = text.replace(/\n/g, '<br>');
+
+  div.appendChild(av);
+  div.appendChild(bub);
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+  return bub;
+}
+
+function showTyping() {
+  const wrap = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.id = 'typing';
+
+  const av = document.createElement('div');
+  av.className = 'avatar';
+  av.textContent = 'CG';
+
+  const ind = document.createElement('div');
+  ind.className = 'typing';
+  ind.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+  div.appendChild(av);
+  div.appendChild(ind);
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function hideTyping() {
+  const el = document.getElementById('typing');
+  if (el) el.remove();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || !mode) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('send-btn').disabled = true;
+
+  addMessage('user', text);
+  messages.push({ role: 'user', content: text });
+  exchanges++;
+
+  showTyping();
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode, messages })
+    });
+
+    hideTyping();
+    if (!res.ok) throw new Error('API error');
+
+    const bub = addMessage('bot', '');
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      for (const line of chunk.split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (raw === '[DONE]') break;
+        try {
+          const delta = JSON.parse(raw).choices?.[0]?.delta?.content || '';
+          full += delta;
+          bub.innerHTML = full.replace('[READY_TO_GENERATE]', '').trim().replace(/\n/g, '<br>');
+          document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+        } catch {}
+      }
+    }
+
+    if (full.includes('[READY_TO_GENERATE]')) {
+      document.getElementById('gen-btn').classList.add('show');
+    }
+
+    messages.push({ role: 'assistant', content: full.replace('[READY_TO_GENERATE]', '').trim() });
+
+  } catch {
+    hideTyping();
+    addMessage('bot', 'Something went wrong — please try sending that again.');
+  }
+
+  document.getElementById('send-btn').disabled = false;
+}
+
+async function generateBrief() {
+  const btn = document.getElementById('gen-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating your brief…';
+  showTyping();
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mode,
+        messages: [...messages, { role: 'user', content: 'GENERATE_BRIEF' }],
+        stream: false
+      })
+    });
+
+    hideTyping();
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+    const raw = data.choices?.[0]?.message?.content || '';
+
+    let brief;
+    try { brief = JSON.parse(raw); }
+    catch {
+      const m = raw.match(/\{[\s\S]*\}/);
+      if (m) brief = JSON.parse(m[0]);
+      else throw new Error('Bad JSON');
+    }
+
+    currentBrief = brief;
+    renderBrief(brief);
+    document.getElementById('overlay').classList.add('open');
+
+  } catch {
+    hideTyping();
+    addMessage('bot', 'I had trouble generating the brief — try clicking the button once more.');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Generate My Brief →';
+}
+
+function renderBrief(brief) {
+  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  let html = `
+    <div class="brief-eyebrow">CommonGround Advisory</div>
+    <div class="brief-title">${brief.title}</div>
+    <div class="brief-meta">${brief.organization} · ${date}</div>
+  `;
+  for (const s of brief.sections) {
+    html += `<div class="brief-section"><h3>${s.heading}</h3><p>${s.content.replace(/\n/g, '<br>')}</p></div>`;
+  }
+  html += `<div class="brief-footer-bar"><span>CommonGround Advisory · commonground-adv@gmail.com</span><span>Confidential</span></div>`;
+  document.getElementById('brief-content').innerHTML = html;
+
+  const subject = encodeURIComponent(`${brief.title}: ${brief.project_name}`);
+  const body = encodeURIComponent(`Hi,\n\nI just used the CommonGround Advisory tool and generated a ${brief.title} for "${brief.project_name}." I'd love to connect.\n\n`);
+  document.getElementById('email-cta').href = `mailto:commonground-adv@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function closeOverlay() {
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function overlayClick(e) {
+  if (e.target === document.getElementById('overlay')) closeOverlay();
+}
+
+function downloadBrief() {
+  if (!currentBrief) return;
+  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const printEl = document.getElementById('__cg-print__');
+
+  const style = document.createElement('style');
+  style.id = '__cg-print-style__';
+  style.textContent = `
+    @media print {
+      body > *:not(#__cg-print__) { display: none !important; }
+      #__cg-print__ {
+        display: block !important;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #1a1a18;
+        padding: 2.5rem;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+      #__cg-print__ .p-eye { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5a7a5e; margin-bottom: 6px; }
+      #__cg-print__ h1 { font-family: Georgia, serif; font-size: 2rem; margin-bottom: 4px; line-height: 1.2; }
+      #__cg-print__ .p-meta { font-size: 0.85rem; color: #999; padding-bottom: 1.5rem; margin-bottom: 2rem; border-bottom: 2px solid #e8dcc8; }
+      #__cg-print__ h2 { font-size: 0.67rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #b85c38; border-bottom: 1px solid #e8dcc8; padding-bottom: 5px; margin: 2rem 0 0.6rem; }
+      #__cg-print__ p { font-size: 0.91rem; line-height: 1.75; margin: 0; }
+      #__cg-print__ .p-foot { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #e8dcc8; font-size: 0.75rem; color: #bbb; display: flex; justify-content: space-between; }
+    }
+    #__cg-print__ { display: none; }
+  `;
+
+  document.getElementById('__cg-print-style__')?.remove();
+  document.head.appendChild(style);
+
+  let inner = `
+    <div class="p-eye">CommonGround Advisory</div>
+    <h1>${currentBrief.title}</h1>
+    <div class="p-meta">${currentBrief.organization} · ${date}</div>
+  `;
+  for (const s of currentBrief.sections) {
+    inner += `<h2>${s.heading}</h2><p>${s.content.replace(/\n/g, '<br>')}</p>`;
+  }
+  inner += `<div class="p-foot"><span>CommonGround Advisory · commonground-adv@gmail.com</span><span>Confidential</span></div>`;
+  printEl.innerHTML = inner;
+
+  window.addEventListener('afterprint', () => {
+    printEl.innerHTML = '';
+    style.remove();
+  }, { once: true });
+
+  window.print();
+}
+
+// textarea auto-resize
+document.getElementById('chat-input').addEventListener('input', function () {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+// enter to send (shift+enter for newline)
+document.getElementById('chat-input').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>
