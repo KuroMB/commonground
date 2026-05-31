@@ -227,18 +227,20 @@
   }
 
   .stat-card {
-    background: var(--cream);
-    border: 1px solid rgba(26,26,24,0.1);
+    background: #2a2a26;
+    border: 1px solid rgba(245,240,232,0.1);
     padding: 1.5rem;
     border-radius: 4px;
     position: relative;
     overflow: hidden;
     animation: fadeSlideUp 0.6s ease both;
+    background-size: cover;
+    background-position: center;
   }
 
-  .stat-card:nth-child(1) { animation-delay: 0.1s; transform: translateX(20px); }
-  .stat-card:nth-child(2) { animation-delay: 0.25s; transform: translateX(-10px); margin-left: 2rem; }
-  .stat-card:nth-child(3) { animation-delay: 0.4s; transform: translateX(15px); }
+  .stat-card:nth-child(1) { animation-delay: 0.1s; transform: translateX(20px); background-image: linear-gradient(rgba(18,18,14,0.74), rgba(18,18,14,0.76)), url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/16/25130/16339'); }
+  .stat-card:nth-child(2) { animation-delay: 0.25s; transform: translateX(-10px); margin-left: 2rem; background-image: linear-gradient(rgba(18,18,14,0.74), rgba(18,18,14,0.76)), url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/16/25141/16343'); }
+  .stat-card:nth-child(3) { animation-delay: 0.4s; transform: translateX(15px); background-image: linear-gradient(rgba(18,18,14,0.74), rgba(18,18,14,0.76)), url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/16/25148/16284'); }
 
   @keyframes fadeSlideUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -250,14 +252,14 @@
     position: absolute;
     left: 0; top: 0; bottom: 0;
     width: 3px;
-    background: var(--rust);
+    background: var(--gold);
   }
 
   .stat-number {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
     font-weight: 900;
-    color: var(--rust);
+    color: var(--gold);
     line-height: 1;
     margin-bottom: 0.35rem;
   }
@@ -265,7 +267,7 @@
   .stat-label {
     font-size: 0.82rem;
     line-height: 1.5;
-    opacity: 0.7;
+    color: rgba(245,240,232,0.82);
   }
 
   /* ── SECTION COMMON ── */
