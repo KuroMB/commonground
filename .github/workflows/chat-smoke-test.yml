@@ -1,0 +1,65 @@
+name: Chat API Smoke Test
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # every hour — auto-disables after 8 runs
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Mode to test'
+        required: true
+        type: choice
+        options: [space, money, idea, need]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write   # needed to disable the workflow after run 8
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # On manual dispatch, just run the chosen mode and stop.
+      - name: Run (manual dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        run: node scripts/test-chat.mjs ${{ inputs.mode }}
+        timeout-minutes: 2
+
+      # On scheduled run, cycle through the 4 modes and stop after 8.
+      - name: Determine scheduled mode
+        if: github.event_name == 'schedule'
+        id: setup
+        run: |
+          MODES=(space money idea need space money idea need)
+          IDX=$(( (${{ github.run_number }} - 1) % 8 ))
+          echo "mode=${MODES[$IDX]}" >> $GITHUB_OUTPUT
+          echo "run_number=${{ github.run_number }}" >> $GITHUB_OUTPUT
+          echo "Run ${{ github.run_number }} of 8 — mode: ${MODES[$IDX]}"
+
+      - name: Run (scheduled)
+        if: github.event_name == 'schedule'
+        run: node scripts/test-chat.mjs ${{ steps.setup.outputs.mode }}
+        timeout-minutes: 2
+
+      - name: Write job summary
+        if: github.event_name == 'schedule'
+        run: |
+          echo "### Smoke Test — Run ${{ steps.setup.outputs.run_number }}/8" >> $GITHUB_STEP_SUMMARY
+          echo "**Mode:** \`${{ steps.setup.outputs.mode }}\`  " >> $GITHUB_STEP_SUMMARY
+          echo "**Result:** ✅ Passed" >> $GITHUB_STEP_SUMMARY
+
+      # After the 8th scheduled run, disable the workflow so the cron stops.
+      - name: Disable workflow after run 8
+        if: github.event_name == 'schedule' && github.run_number >= 8
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            --method PUT \
+            repos/${{ github.repository }}/actions/workflows/chat-smoke-test.yml/disable
+          echo "All 8 runs complete — workflow disabled."
