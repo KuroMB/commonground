@@ -93,6 +93,22 @@
 
   nav ul a:hover { opacity: 1; }
 
+  nav ul a.nav-active {
+    opacity: 1;
+    position: relative;
+  }
+
+  nav ul a.nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--rust);
+    border-radius: 1px;
+  }
+
   .nav-cta {
     color: var(--rust) !important;
     opacity: 1 !important;
@@ -2006,6 +2022,27 @@
     burger.classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  // Active nav state on scroll
+  const navLinks = [...document.querySelectorAll('nav ul a[href^="#"]')]
+    .filter(a => !a.classList.contains('nav-cta'));
+  const navSections = navLinks
+    .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+    .filter(Boolean);
+
+  function updateActiveNav() {
+    const trigger = window.scrollY + window.innerHeight * 0.3;
+    let current = null;
+    for (const section of navSections) {
+      if (section.offsetTop <= trigger) current = section.id;
+    }
+    navLinks.forEach(a => {
+      a.classList.toggle('nav-active', a.getAttribute('href') === `#${current}`);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
 
   // Intersection observer for fade-in
   const observer = new IntersectionObserver((entries) => {
